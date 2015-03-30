@@ -17,7 +17,7 @@ SysTetris::SysTetris() {
     //init field
     for(int i=0; i<FIELD_H; i++)
         for(int j=0; j<FIELD_W; j++)
-            field[i][j] = 0;
+            field[i][j] = NULL;
     
     srand(time(0));
     
@@ -31,9 +31,13 @@ SysTetris::~SysTetris() {
         delete currentBrick;
     if(nextBrick != NULL)
         delete nextBrick;
+    
+    for(int i=0; i<FIELD_H; i++)
+        for(int j=0; j<FIELD_W; j++)
+            if(field[i][j] != NULL) delete field[i][j];
 }
 
-int SysTetris::getField(int r, int c) {
+Brick3dCube* SysTetris::getField(int r, int c) {
     return field[r][c];
 }
 
@@ -74,7 +78,17 @@ void SysTetris::update(float dt) {
     }
 
     nextBrickRotation += 40*dt;
-
+    
+    
+    for(int i=0 ; i<FIELD_H ; i++) {
+        for(int j=0; j<FIELD_W; j++) {
+            if(field[i][j] != NULL) {
+                field[i][j]->updateXY(j,i);
+                field[i][j]->updatePosition(dt);
+ 
+            }
+        }
+    }
 }
 
 void SysTetris::draw() {
@@ -96,12 +110,12 @@ void SysTetris::draw() {
     //Disegna cubi caduti
     for(int i=0; i<FIELD_H; i++) {
             for(int j=0; j<FIELD_W; j++) {
-                    if( field[i][j]> 0) {
-                        drawColoredCube(l, colorFromId(field[i][j]));
+                
+                    //if( field[i][j] != NULL) 
+                    //    drawColoredCube(l, colorFromId(field[i][j]));
 
-                      //disegna brick
-                    } else if( i>=y && i<y+4 && j>=x && j<x+4 &&
-                        currentBrick->getBodyValue(i-y,j-x) != 0   ) {
+                    if( i>=y && i<y+4 && j>=x && j<x+4 &&
+                        currentBrick->getBodyValue(i-y,j-x) != 0 ) {
                         drawColoredCube(l, colorFromId(currentBrick->getID()));
                     }
 
@@ -112,6 +126,20 @@ void SysTetris::draw() {
     }
     
     glPopMatrix();
+    
+    
+    
+     for(int i=0; i<FIELD_H; i++) 
+        for(int j=0; j<FIELD_W; j++) { 
+            Brick3dCube* tmp = field[i][j];
+            
+            if( tmp != NULL) {
+                glPushMatrix();
+                glTranslatef(2*l*tmp->getXreal(), -2*l*tmp->getYreal(), 0.0f);
+                drawColoredCube(l, colorFromId(field[i][j]->getID()));
+                glPopMatrix();
+            }
+        }
     
     
     //disegna prossimo brick
@@ -230,7 +258,7 @@ void SysTetris::checkFullLines() {
     for(int i=0; i< FIELD_H; i++) {
         bool lineaPiena =true;
         for(int j=0;lineaPiena && j<FIELD_W; j++) {
-            if(field[i][j] == 0)
+            if(field[i][j] == NULL)
                 lineaPiena=false;
         }
         if(lineaPiena) {
@@ -258,8 +286,10 @@ bool SysTetris::copyLine(int s, int d) {
     if(s<0 || s>=FIELD_H || d<0 || d>=FIELD_H)
         return false;
     
-    for(int i=0; i<FIELD_W; i++)
+    //MEMORY LEAK
+    for(int i=0; i<FIELD_W; i++) {
         field[d][i] = field[s][i];
+    }
     
     return true;
 }

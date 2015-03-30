@@ -38,6 +38,7 @@
 #endif
 
 #include "../Primitives.h"
+#include "../Brick3dCube.h"
 
 #ifndef BRICK_H
 #define	BRICK_H
@@ -56,11 +57,11 @@ public:
     int getID(){ return id;}
     
     
-    bool checkPos(int x, int y, int field[FIELD_H][FIELD_W]);
-    void saveOnField(int field[FIELD_H][FIELD_W]);
+    bool checkPos(int x, int y, Brick3dCube* field[FIELD_H][FIELD_W]);
+    void saveOnField(Brick3dCube* field[FIELD_H][FIELD_W]);
 
     void rotate();
-    void rotatedCheckPos(int field[FIELD_H][FIELD_W]);
+    void rotatedCheckPos(Brick3dCube* field[FIELD_H][FIELD_W]);
     
     virtual int getBodyValue(int r, int c) = 0;
 

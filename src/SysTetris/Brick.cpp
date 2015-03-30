@@ -27,7 +27,7 @@ Brick::Brick(int x) {
 Brick::~Brick() {
 }
 
-bool Brick::checkPos(int x, int y, int field[FIELD_H][FIELD_W]) {
+bool Brick::checkPos(int x, int y, Brick3dCube* field[FIELD_H][FIELD_W]) {
 
     for(int i=y; i<y+4; i++) {
         for(int j=x; j<x+4; j++) {
@@ -35,19 +35,19 @@ bool Brick::checkPos(int x, int y, int field[FIELD_H][FIELD_W]) {
                if(this->getBodyValue(i-y,j-x) != 0)
                    return false;
             
-            if(field[i][j] > 0 && this->getBodyValue(i-y,j-x) != 0)
+            if(field[i][j] != NULL && this->getBodyValue(i-y,j-x) != 0)
                 return false;
         }
     }
     return true;
 }
 
-void Brick::saveOnField(int field[FIELD_H][FIELD_W]) {
+void Brick::saveOnField(Brick3dCube* field[FIELD_H][FIELD_W]) {
     
     for(int i=y; i<y+4; i++) {
         for(int j=x; j<x+4; j++) {            
             if(this->getBodyValue(i-y,j-x) != 0)
-                field[i][j] = id;
+                field[i][j] = new Brick3dCube(id, j,i);
         }
     }
 }
@@ -56,7 +56,7 @@ void Brick::rotate() {
     rotation = (rotation+1)% maxRotation;
 }
 
-void Brick::rotatedCheckPos(int field[FIELD_H][FIELD_W]) {
+void Brick::rotatedCheckPos(Brick3dCube* field[FIELD_H][FIELD_W]) {
     int r = rotation;
     rotation = (rotation+1)% maxRotation;
     

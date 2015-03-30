@@ -12,6 +12,7 @@
 #define	SYSTETRIS_H
 
 #include "SysTetris/Brick.h"
+#include "Brick3dCube.h"
 
 class SysTetris {
 public:
@@ -21,7 +22,7 @@ public:
     void update(float dt);
     void draw();
     
-    int getField(int r, int c);
+    Brick3dCube* getField(int r, int c);
     
     Brick* newBrick();
     void createBrick();
@@ -42,7 +43,7 @@ private:
     void removeLine(int n);
     bool copyLine(int s, int d);
     
-    int field[FIELD_H][FIELD_W];
+    Brick3dCube* field[FIELD_H][FIELD_W];
     
     bool Left=0, Right=0;
     
