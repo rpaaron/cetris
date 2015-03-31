@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.4)
 
-project(Shooter)
+project(Tetris3d)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lSDL -lGL -lGLU")
 
