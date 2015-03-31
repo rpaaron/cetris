@@ -10,16 +10,21 @@
 
 class Brick3dCube {
 public:
+    Brick3dCube(int id);
     Brick3dCube(int id, int x, int y);
     virtual ~Brick3dCube();
 
+    float getX() { return x; }
+    float getY() { return y; }
+    
     float getXreal() { return Xreal; }
     float getYreal() { return Yreal; }
     void updateXY(int x, int y) { this->x= x; this->y=y; }
     int getID() { return id; }
     
     void updatePosition(float dt);
-private:
+
+protected:
     int id;
     int x,y;
     float Xreal, Yreal;

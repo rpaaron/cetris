@@ -8,11 +8,15 @@
 #define FIELD_H 20
 #define FIELD_W 10
 
+#include <list>
+
 #ifndef SYSTETRIS_H
 #define	SYSTETRIS_H
 
 #include "SysTetris/Brick.h"
 #include "Brick3dCube.h"
+#include "Eliminated3dCube.h"
+
 
 class SysTetris {
 public:
@@ -44,6 +48,8 @@ private:
     bool copyLine(int s, int d);
     
     Brick3dCube* field[FIELD_H][FIELD_W];
+    std::list <Eliminated3dCube*> freeBrick3dCube;
+    
     
     bool Left=0, Right=0;
     
@@ -51,6 +57,8 @@ private:
     
     float MinTimeMove =0;
     const float MoveSpeed = 100;
+    
+    float l = 1;
     
     float FallTime = 0;
     const float FallSpeed = 10;

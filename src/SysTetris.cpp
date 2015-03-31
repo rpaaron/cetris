@@ -10,6 +10,7 @@
 #include "SysGame.h"
 #include "SysTetris.h"
 #include "SysTetris/Brick.h"
+#include "Eliminated3dCube.h"
 
 
 SysTetris::SysTetris() {
@@ -35,6 +36,11 @@ SysTetris::~SysTetris() {
     for(int i=0; i<FIELD_H; i++)
         for(int j=0; j<FIELD_W; j++)
             if(field[i][j] != NULL) delete field[i][j];
+        
+    for(Eliminated3dCube* elem : freeBrick3dCube)
+        delete elem;
+    
+    freeBrick3dCube.clear();
 }
 
 Brick3dCube* SysTetris::getField(int r, int c) {
@@ -89,14 +95,21 @@ void SysTetris::update(float dt) {
             }
         }
     }
+    
+    for(    std::list<Eliminated3dCube*>::iterator elem = freeBrick3dCube.begin() ;
+            elem != freeBrick3dCube.end() ; elem++) {
+        
+        if(!(*elem)->updatePosition(dt)) {
+            delete (*elem);
+            elem =freeBrick3dCube.erase(elem);
+        }
+    }
 }
 
 void SysTetris::draw() {
         //Clear color buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-    float l = 1;
-
+  
     glLoadIdentity();
     glTranslatef(0, 0, -60);
     glTranslatef(-(l*FIELD_W-1), l*FIELD_H, 0);
@@ -141,6 +154,7 @@ void SysTetris::draw() {
             }
         }
     
+    glPushMatrix();
     
     //disegna prossimo brick
     glTranslatef(2*l*(FIELD_W-2), -l*4, +10);
@@ -159,6 +173,19 @@ void SysTetris::draw() {
             glTranslatef(-(2*l*4), -(2*l), 0.0f);
         }
     }
+    
+    
+    for(Eliminated3dCube* elem : freeBrick3dCube) {
+        glLoadIdentity();
+        glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
+        
+        glTranslatef(elem->getXreal(), elem->getYreal(), elem->getZreal());
+        glRotatef(elem->getRotation(), 1.0f, 0.0f, 0.0f);
+        drawColoredCube(l, colorFromId(elem->getID()));
+        
+    }
+    
+    
     //Update screen
     SDL_GL_SwapBuffers();
     
@@ -270,6 +297,19 @@ void SysTetris::checkFullLines() {
     score += 100*k;
     
     for(int i=0; i<k; i++) {
+        //save free bricks
+        for(int j=0; j<FIELD_W; j++) {
+            Brick3dCube *src= field[toRemove[i]][j];
+            
+            float x = src->getX()*2*l;
+            float y = -src->getY()*2*l;
+            
+            Eliminated3dCube *tmp= new Eliminated3dCube(src->getID(), x,y,0,l);
+            delete src;
+            
+            freeBrick3dCube.push_front(tmp);
+        }
+        
         removeLine(toRemove[i]);
     }
 }

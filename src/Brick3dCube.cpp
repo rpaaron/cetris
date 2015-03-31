@@ -7,6 +7,15 @@
 
 #include "Brick3dCube.h"
 
+Brick3dCube::Brick3dCube(int id) {
+    this->id = id;
+    this->x = 0;
+    this->y = 0;
+    Xreal=0;
+    Yreal=0;
+}
+
+
 Brick3dCube::Brick3dCube(int id, int x, int y) {
     this->id = id;
     this->x = x;
