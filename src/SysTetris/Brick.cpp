@@ -12,7 +12,8 @@
 #include "Brick.h"
 
 Brick::Brick() {
-
+    for(int i=0; i<4; i++)
+        bodyBricks[i] = NULL;
 }
 
 
@@ -21,8 +22,9 @@ Brick::Brick(int x) {
     this->y = 0;
     this->id = 0;
     this->rotation =0;
-    
 
+    for(int i=0; i<4; i++)
+        bodyBricks[i] = NULL;
 }
 
 Brick::~Brick() {
@@ -34,6 +36,13 @@ void Brick::init3dCubes() {
     }
     
     setBodyCubesSpeed(ROTATE);
+}
+
+void Brick::delete3dCubes() {
+    for(int i=0; i<4; i++) {
+        if(bodyBricks[i] != NULL)
+            delete bodyBricks[i];
+    }
 }
 
 
@@ -61,7 +70,9 @@ void Brick::saveOnField(Brick3dCube* field[FIELD_H][FIELD_W]) {
         for(int j=x; j<x+4; j++) {            
             if(this->getBodyValue(i-y,j-x) != 0) {
                 field[i][j] = bodyBricks[k];
-                bodyBricks[k++]->setXY(j,i);
+                bodyBricks[k] = NULL;
+                field[i][j]->setXY(j,i);
+                k++;
             }
         }
     }

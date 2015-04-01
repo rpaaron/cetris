@@ -28,10 +28,15 @@ SysTetris::SysTetris() {
 
 
 SysTetris::~SysTetris() {
-    if(currentBrick != NULL)
+    if(currentBrick != NULL) {
+        currentBrick->delete3dCubes();
         delete currentBrick;
-    if(nextBrick != NULL)
+    }    
+        
+    if(nextBrick != NULL) {
+        nextBrick->delete3dCubes();
         delete nextBrick;
+    }
     
     for(int i=0; i<FIELD_H; i++)
         for(int j=0; j<FIELD_W; j++)

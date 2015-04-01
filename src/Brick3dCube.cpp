@@ -4,6 +4,7 @@
  * 
  * Created on 30 marzo 2015, 22.47
  */
+#include <iostream>
 #include <cmath>
 #include "Brick3dCube.h"
 
@@ -13,6 +14,8 @@ Brick3dCube::Brick3dCube(int id) {
     this->y = 0;
     Xreal=0;
     Yreal=0;
+    
+    printf("create 3d cube\n");
 }
 
 
@@ -22,11 +25,14 @@ Brick3dCube::Brick3dCube(int id, int x, int y) {
     this->y = y;
     Xreal=x;
     Yreal=y;
+    
+    printf("create 3d cube\n");
 }
 
 
 
 Brick3dCube::~Brick3dCube() {
+    printf("deleting 3d cube\n");
 }
 
 

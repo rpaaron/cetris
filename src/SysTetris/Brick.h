@@ -50,6 +50,7 @@ public:
     virtual ~Brick();
     
     void init3dCubes();
+    void delete3dCubes();
     
     void setX(int x) { this->x = x; }
     void setY(int y) { this->y = y; }
