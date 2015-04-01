@@ -4,7 +4,7 @@
  * 
  * Created on 30 marzo 2015, 22.47
  */
-
+#include <cmath>
 #include "Brick3dCube.h"
 
 Brick3dCube::Brick3dCube(int id) {
@@ -25,20 +25,25 @@ Brick3dCube::Brick3dCube(int id, int x, int y) {
 }
 
 
+
 Brick3dCube::~Brick3dCube() {
 }
 
+
 void Brick3dCube::updatePosition(float dt) {
     
-    if(Xreal > (float) x+delta)
-        Xreal -= speed*dt;
-    if(Xreal < (float) x-delta)
-        Xreal += speed*dt;
+    float dx = fabs(Xreal - float(x));
+    float dy = fabs(Yreal - float(y));
     
-    if(Yreal > (float) y+delta)
-        Yreal -= speed*dt;
-    if(Yreal < (float) y-delta)
-        Yreal += speed*dt;
+    if(dx > delta)
+        Xreal > x ? Xreal -= dx*speed*dt : Xreal += dx*speed*dt;
+    else
+        Xreal = x;
+    
+    if(dy > delta)
+        Yreal > y ? Yreal -= dy*speed*dt : Yreal += dy*speed*dt;
+    else
+        Yreal = y;
 }
 
 

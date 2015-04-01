@@ -48,7 +48,7 @@ Brick3dCube* SysTetris::getField(int r, int c) {
 }
 
 void SysTetris::update(float dt) {
-    
+        
     float speed = FallSpeed+AdditionFallSpeed+ score/500;
     speed >= MaxFallSpeed? speed = MaxFallSpeed : speed; 
     FallTime += speed*dt;
@@ -60,9 +60,11 @@ void SysTetris::update(float dt) {
     
     if(MinTimeMove<= 0) {
         if( Left && currentBrick->checkPos( xtmp-1, ytmp,field)) {
+                currentBrick->setBodyCubesSpeed(Brick::LATERAL);
                 currentBrick->setX(xtmp-1);
                 currentBrick->setY(ytmp);
         } else if (Right && currentBrick->checkPos( xtmp+1, ytmp,field)) {
+                currentBrick->setBodyCubesSpeed(Brick::LATERAL);
                 currentBrick->setX(xtmp+1);
                 currentBrick->setY(ytmp);
         }
@@ -71,9 +73,11 @@ void SysTetris::update(float dt) {
 
     if(FallTime >=10) {        
         if(currentBrick->checkPos( xtmp, ytmp+1,field)) {
+            currentBrick->setBodyCubesSpeed(Brick::VERTICAL);
             currentBrick->setX(xtmp);
             currentBrick->setY(ytmp+1);
         } else {
+            currentBrick->setBodyCubesSpeed(Brick::ROWFALL);
             score += 10;
             currentBrick->saveOnField(field);
             checkFullLines();
@@ -84,26 +88,29 @@ void SysTetris::update(float dt) {
     }
 
     nextBrickRotation += 40*dt;
-    
+           
     
     for(int i=0 ; i<FIELD_H ; i++) {
         for(int j=0; j<FIELD_W; j++) {
             if(field[i][j] != NULL) {
-                field[i][j]->updateXY(j,i);
+                field[i][j]->setXY(j,i);
                 field[i][j]->updatePosition(dt);
  
             }
         }
     }
     
-    for(    std::list<Eliminated3dCube*>::iterator elem = freeBrick3dCube.begin() ;
-            elem != freeBrick3dCube.end() ; elem++) {
+    for( std::list<Eliminated3dCube*>::iterator elem = freeBrick3dCube.begin() ;
+         elem != freeBrick3dCube.end() ; elem++) {
         
         if(!(*elem)->updatePosition(dt)) {
             delete (*elem);
             elem =freeBrick3dCube.erase(elem);
         }
     }
+    
+    currentBrick->update(dt); 
+
 }
 
 void SysTetris::draw() {
@@ -118,31 +125,22 @@ void SysTetris::draw() {
 
     int x = currentBrick->getX();
     int y = currentBrick->getY();
-
-
-    //Disegna cubi caduti
-    for(int i=0; i<FIELD_H; i++) {
-            for(int j=0; j<FIELD_W; j++) {
-                
-                    //if( field[i][j] != NULL) 
-                    //    drawColoredCube(l, colorFromId(field[i][j]));
-
-                    if( i>=y && i<y+4 && j>=x && j<x+4 &&
-                        currentBrick->getBodyValue(i-y,j-x) != 0 ) {
-                        drawColoredCube(l, colorFromId(currentBrick->getID()));
-                    }
-
-                    glTranslatef(2*l, 0.0f, 0.0f);
-
-            }
-            glTranslatef(-(2*l*FIELD_W), -(2*l), 0.0f);
+    
+    for(int i=0; i<4; i++) {
+        Brick3dCube* elem = currentBrick->get3Dcubes()[i];
+        
+        glLoadIdentity();
+        glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
+        
+        glTranslatef(2*l*elem->getXreal(), -2*l*elem->getYreal(), 0);
+        drawColoredCube(l, colorFromId(elem->getID()));
     }
     
     glPopMatrix();
     
     
-    
-     for(int i=0; i<FIELD_H; i++) 
+    //DISEGNA CUBI SUL FIELD
+    for(int i=0; i<FIELD_H; i++) 
         for(int j=0; j<FIELD_W; j++) { 
             Brick3dCube* tmp = field[i][j];
             
@@ -157,11 +155,10 @@ void SysTetris::draw() {
     glPushMatrix();
     
     //disegna prossimo brick
-    glTranslatef(2*l*(FIELD_W-2), -l*4, +10);
-    
-    glTranslatef(2*l*2, -2*l, 0.0f);
-    glRotatef(nextBrickRotation, 1, 1, 1);
-    glTranslatef(-2*l*2, +2*l, 0.0f);
+    glTranslatef(2*l*(FIELD_W-2), -l*4, +10); //posizione
+    glTranslatef(2*l*2, -2*l, 0.0f);          //accentra
+    glRotatef(nextBrickRotation, 1, 1, 1);    //ruota
+    glTranslatef(-2*l*2, +2*l, 0.0f);         //decentra
     
     if(nextBrick != NULL) {
         for(int i=0; i<4; i++) {
@@ -174,7 +171,7 @@ void SysTetris::draw() {
         }
     }
     
-    
+    //disegna cubi eliminati
     for(Eliminated3dCube* elem : freeBrick3dCube) {
         glLoadIdentity();
         glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
@@ -182,7 +179,6 @@ void SysTetris::draw() {
         glTranslatef(elem->getXreal(), elem->getYreal(), elem->getZreal());
         glRotatef(elem->getRotation(), 1.0f, 0.0f, 0.0f);
         drawColoredCube(l, colorFromId(elem->getID()));
-        
     }
     
     
@@ -192,6 +188,8 @@ void SysTetris::draw() {
 }
 
 void SysTetris::fallBrick() {
+    currentBrick->setBodyCubesSpeed(Brick::VERTICAL);
+    
     int xtmp = currentBrick->getX();
     int ytmp = currentBrick->getY()+1;
     
@@ -260,21 +258,21 @@ Brick * SysTetris::newBrick() {
 COLOR SysTetris::colorFromId(int id) {
     switch (id) {
         case 1:
-            return { 1.0f, 1.0f, 0.0f, 1.0f};
+            return { 1.0f, 1.0f, 0.0f, 0.2f};
         case 2:
-            return { 0.0f, 1.0f, 0.9f, 1.0f};
+            return { 0.0f, 1.0f, 0.9f, 0.2f};
         case 3:
-            return { 1.0f, 0.0f, 1.0f, 1.0f};           
+            return { 1.0f, 0.0f, 1.0f, 0.2f};           
         case 4:
-            return { 0.0f, 0.0f, 1.0f, 1.0f};            
+            return { 0.0f, 0.0f, 1.0f, 0.2f};            
         case 5:
-            return { 1.0f, 0.5f, 0.0f, 1.0f};
+            return { 1.0f, 0.5f, 0.0f, 0.2f};
         case 6:
-            return { 0.0f, 1.0f, 0.0f, 1.0f};
+            return { 0.0f, 1.0f, 0.0f, 0.2f};
         case 7:
-            return { 1.0f, 0.0f, 0.0f, 1.0f};
+            return { 1.0f, 0.0f, 0.0f, 0.2f};
         default:
-            return { 1.0f, 1.0f, 1.0f, 1.0f};
+            return { 1.0f, 1.0f, 1.0f, 0.2f};
     }
 }
 

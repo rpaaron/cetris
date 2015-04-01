@@ -11,6 +11,7 @@ ZBar::ZBar(int x) : Brick(x) {
     id = 6;   
     maxRotation = 2;
     
+    Brick::init3dCubes();
     printf("create zbar\n");
 }
 

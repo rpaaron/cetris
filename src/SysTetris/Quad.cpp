@@ -12,6 +12,7 @@ Quad::Quad(int x) : Brick(x) {
     id = 1;
     maxRotation = 1;
     
+    Brick::init3dCubes();
     printf("create quad\n");
 }
 

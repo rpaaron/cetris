@@ -19,8 +19,12 @@ public:
     
     float getXreal() { return Xreal; }
     float getYreal() { return Yreal; }
-    void updateXY(int x, int y) { this->x= x; this->y=y; }
+    void setXY(int x, int y) { this->x= x; this->y=y; }
+    void setXYreal(int x, int y) { this->Xreal= x; this->Yreal=y; }
     int getID() { return id; }
+    
+    void setSpeed(float speed) { this->speed = speed; }
+    
     
     void updatePosition(float dt);
 
@@ -30,7 +34,7 @@ protected:
     float Xreal, Yreal;
     float speed = 5;
     
-    float delta=0.01;
+    float delta=0.1;
 };
 
 
