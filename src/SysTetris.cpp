@@ -10,6 +10,7 @@
 #include "SysGame.h"
 #include "SysTetris.h"
 #include "SysTetris/Brick.h"
+#include "Eliminated3dCube.h"
 
 
 SysTetris::SysTetris() {
@@ -17,7 +18,7 @@ SysTetris::SysTetris() {
     //init field
     for(int i=0; i<FIELD_H; i++)
         for(int j=0; j<FIELD_W; j++)
-            field[i][j] = 0;
+            field[i][j] = NULL;
     
     srand(time(0));
     
@@ -27,18 +28,32 @@ SysTetris::SysTetris() {
 
 
 SysTetris::~SysTetris() {
-    if(currentBrick != NULL)
+    if(currentBrick != NULL) {
+        currentBrick->delete3dCubes();
         delete currentBrick;
-    if(nextBrick != NULL)
+    }    
+        
+    if(nextBrick != NULL) {
+        nextBrick->delete3dCubes();
         delete nextBrick;
+    }
+    
+    for(int i=0; i<FIELD_H; i++)
+        for(int j=0; j<FIELD_W; j++)
+            if(field[i][j] != NULL) delete field[i][j];
+        
+    for(Eliminated3dCube* elem : freeBrick3dCube)
+        delete elem;
+    
+    freeBrick3dCube.clear();
 }
 
-int SysTetris::getField(int r, int c) {
+Brick3dCube* SysTetris::getField(int r, int c) {
     return field[r][c];
 }
 
 void SysTetris::update(float dt) {
-    
+        
     float speed = FallSpeed+AdditionFallSpeed+ score/500;
     speed >= MaxFallSpeed? speed = MaxFallSpeed : speed; 
     FallTime += speed*dt;
@@ -50,9 +65,11 @@ void SysTetris::update(float dt) {
     
     if(MinTimeMove<= 0) {
         if( Left && currentBrick->checkPos( xtmp-1, ytmp,field)) {
+                currentBrick->setBodyCubesSpeed(Brick::LATERAL);
                 currentBrick->setX(xtmp-1);
                 currentBrick->setY(ytmp);
         } else if (Right && currentBrick->checkPos( xtmp+1, ytmp,field)) {
+                currentBrick->setBodyCubesSpeed(Brick::LATERAL);
                 currentBrick->setX(xtmp+1);
                 currentBrick->setY(ytmp);
         }
@@ -61,9 +78,11 @@ void SysTetris::update(float dt) {
 
     if(FallTime >=10) {        
         if(currentBrick->checkPos( xtmp, ytmp+1,field)) {
+            currentBrick->setBodyCubesSpeed(Brick::VERTICAL);
             currentBrick->setX(xtmp);
             currentBrick->setY(ytmp+1);
         } else {
+            currentBrick->setBodyCubesSpeed(Brick::ROWFALL);
             score += 10;
             currentBrick->saveOnField(field);
             checkFullLines();
@@ -74,15 +93,35 @@ void SysTetris::update(float dt) {
     }
 
     nextBrickRotation += 40*dt;
+           
+    
+    for(int i=0 ; i<FIELD_H ; i++) {
+        for(int j=0; j<FIELD_W; j++) {
+            if(field[i][j] != NULL) {
+                field[i][j]->setXY(j,i);
+                field[i][j]->updatePosition(dt);
+ 
+            }
+        }
+    }
+    
+    for( std::list<Eliminated3dCube*>::iterator elem = freeBrick3dCube.begin() ;
+         elem != freeBrick3dCube.end() ; elem++) {
+        
+        if(!(*elem)->updatePosition(dt)) {
+            delete (*elem);
+            elem =freeBrick3dCube.erase(elem);
+        }
+    }
+    
+    currentBrick->update(dt); 
 
 }
 
 void SysTetris::draw() {
         //Clear color buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-
-    float l = 1;
-
+  
     glLoadIdentity();
     glTranslatef(0, 0, -60);
     glTranslatef(-(l*FIELD_W-1), l*FIELD_H, 0);
@@ -91,35 +130,40 @@ void SysTetris::draw() {
 
     int x = currentBrick->getX();
     int y = currentBrick->getY();
-
-
-    //Disegna cubi caduti
-    for(int i=0; i<FIELD_H; i++) {
-            for(int j=0; j<FIELD_W; j++) {
-                    if( field[i][j]> 0) {
-                        drawColoredCube(l, colorFromId(field[i][j]));
-
-                      //disegna brick
-                    } else if( i>=y && i<y+4 && j>=x && j<x+4 &&
-                        currentBrick->getBodyValue(i-y,j-x) != 0   ) {
-                        drawColoredCube(l, colorFromId(currentBrick->getID()));
-                    }
-
-                    glTranslatef(2*l, 0.0f, 0.0f);
-
-            }
-            glTranslatef(-(2*l*FIELD_W), -(2*l), 0.0f);
+    
+    for(int i=0; i<4; i++) {
+        Brick3dCube* elem = currentBrick->get3Dcubes()[i];
+        
+        glLoadIdentity();
+        glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
+        
+        glTranslatef(2*l*elem->getXreal(), -2*l*elem->getYreal(), 0);
+        drawColoredCube(l, colorFromId(elem->getID()));
     }
     
     glPopMatrix();
     
     
-    //disegna prossimo brick
-    glTranslatef(2*l*(FIELD_W-2), -l*4, +10);
+    //DISEGNA CUBI SUL FIELD
+    for(int i=0; i<FIELD_H; i++) 
+        for(int j=0; j<FIELD_W; j++) { 
+            Brick3dCube* tmp = field[i][j];
+            
+            if( tmp != NULL) {
+                glPushMatrix();
+                glTranslatef(2*l*tmp->getXreal(), -2*l*tmp->getYreal(), 0.0f);
+                drawColoredCube(l, colorFromId(field[i][j]->getID()));
+                glPopMatrix();
+            }
+        }
     
-    glTranslatef(2*l*2, -2*l, 0.0f);
-    glRotatef(nextBrickRotation, 1, 1, 1);
-    glTranslatef(-2*l*2, +2*l, 0.0f);
+    glPushMatrix();
+    
+    //disegna prossimo brick
+    glTranslatef(2*l*(FIELD_W-2), -l*4, +10); //posizione
+    glTranslatef(2*l*2, -2*l, 0.0f);          //accentra
+    glRotatef(nextBrickRotation, 1, 1, 1);    //ruota
+    glTranslatef(-2*l*2, +2*l, 0.0f);         //decentra
     
     if(nextBrick != NULL) {
         for(int i=0; i<4; i++) {
@@ -131,12 +175,26 @@ void SysTetris::draw() {
             glTranslatef(-(2*l*4), -(2*l), 0.0f);
         }
     }
+    
+    //disegna cubi eliminati
+    for(Eliminated3dCube* elem : freeBrick3dCube) {
+        glLoadIdentity();
+        glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
+        
+        glTranslatef(elem->getXreal(), elem->getYreal(), elem->getZreal());
+        glRotatef(elem->getRotation(), 1.0f, 0.0f, 0.0f);
+        drawColoredCube(l, colorFromId(elem->getID()));
+    }
+    
+    
     //Update screen
     SDL_GL_SwapBuffers();
     
 }
 
 void SysTetris::fallBrick() {
+    currentBrick->setBodyCubesSpeed(Brick::VERTICAL);
+    
     int xtmp = currentBrick->getX();
     int ytmp = currentBrick->getY()+1;
     
@@ -205,21 +263,21 @@ Brick * SysTetris::newBrick() {
 COLOR SysTetris::colorFromId(int id) {
     switch (id) {
         case 1:
-            return { 1.0f, 1.0f, 0.0f, 1.0f};
+            return { 1.0f, 1.0f, 0.0f, 0.2f};
         case 2:
-            return { 0.0f, 1.0f, 0.9f, 1.0f};
+            return { 0.0f, 1.0f, 0.9f, 0.2f};
         case 3:
-            return { 1.0f, 0.0f, 1.0f, 1.0f};           
+            return { 1.0f, 0.0f, 1.0f, 0.2f};           
         case 4:
-            return { 0.0f, 0.0f, 1.0f, 1.0f};            
+            return { 0.0f, 0.0f, 1.0f, 0.2f};            
         case 5:
-            return { 1.0f, 0.5f, 0.0f, 1.0f};
+            return { 1.0f, 0.5f, 0.0f, 0.2f};
         case 6:
-            return { 0.0f, 1.0f, 0.0f, 1.0f};
+            return { 0.0f, 1.0f, 0.0f, 0.2f};
         case 7:
-            return { 1.0f, 0.0f, 0.0f, 1.0f};
+            return { 1.0f, 0.0f, 0.0f, 0.2f};
         default:
-            return { 1.0f, 1.0f, 1.0f, 1.0f};
+            return { 1.0f, 1.0f, 1.0f, 0.2f};
     }
 }
 
@@ -230,7 +288,7 @@ void SysTetris::checkFullLines() {
     for(int i=0; i< FIELD_H; i++) {
         bool lineaPiena =true;
         for(int j=0;lineaPiena && j<FIELD_W; j++) {
-            if(field[i][j] == 0)
+            if(field[i][j] == NULL)
                 lineaPiena=false;
         }
         if(lineaPiena) {
@@ -242,6 +300,19 @@ void SysTetris::checkFullLines() {
     score += 100*k;
     
     for(int i=0; i<k; i++) {
+        //save free bricks
+        for(int j=0; j<FIELD_W; j++) {
+            Brick3dCube *src= field[toRemove[i]][j];
+            
+            float x = src->getX()*2*l;
+            float y = -src->getY()*2*l;
+            
+            Eliminated3dCube *tmp= new Eliminated3dCube(src->getID(), x,y,0,l);
+            delete src;
+            
+            freeBrick3dCube.push_front(tmp);
+        }
+        
         removeLine(toRemove[i]);
     }
 }
@@ -258,8 +329,10 @@ bool SysTetris::copyLine(int s, int d) {
     if(s<0 || s>=FIELD_H || d<0 || d>=FIELD_H)
         return false;
     
-    for(int i=0; i<FIELD_W; i++)
+    //MEMORY LEAK
+    for(int i=0; i<FIELD_W; i++) {
         field[d][i] = field[s][i];
+    }
     
     return true;
 }

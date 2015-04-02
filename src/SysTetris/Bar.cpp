@@ -11,6 +11,7 @@ Bar::Bar(int x) : Brick(x) {
     id = 2;   
     maxRotation = 2;
     
+    Brick::init3dCubes();
     printf("create bar\n");
 }
 

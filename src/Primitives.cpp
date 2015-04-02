@@ -13,7 +13,7 @@ void drawColoredCube(float l, COLOR col) {
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); 
     glLineWidth(2.5);
     
-    glColor4f(col.r, col.g, col.b, 0.2);
+    glColor4f(col.r, col.g, col.b, col.a);
     glBlendFunc(GL_SRC_ALPHA,GL_ONE); 
      
     glPolygonMode(GL_BACK, GL_FILL);

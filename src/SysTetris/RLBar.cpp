@@ -11,6 +11,7 @@ RLBar::RLBar(int x) : Brick(x) {
     id = 5;   
     maxRotation = 4;
     
+    Brick::init3dCubes();
     printf("create rlbar\n");
 }
 

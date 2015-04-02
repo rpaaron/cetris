@@ -11,6 +11,7 @@ RZBar::RZBar(int x) : Brick(x) {
     id = 7;   
     maxRotation = 2;
     
+    Brick::init3dCubes();
     printf("create rzbar\n");
 }
 

@@ -38,6 +38,7 @@
 #endif
 
 #include "../Primitives.h"
+#include "../Brick3dCube.h"
 
 #ifndef BRICK_H
 #define	BRICK_H
@@ -48,6 +49,9 @@ public:
     Brick(int x);
     virtual ~Brick();
     
+    void init3dCubes();
+    void delete3dCubes();
+    
     void setX(int x) { this->x = x; }
     void setY(int y) { this->y = y; }
     
@@ -56,14 +60,22 @@ public:
     int getID(){ return id;}
     
     
-    bool checkPos(int x, int y, int field[FIELD_H][FIELD_W]);
-    void saveOnField(int field[FIELD_H][FIELD_W]);
+    bool checkPos(int x, int y, Brick3dCube* field[FIELD_H][FIELD_W]);
+    void saveOnField(Brick3dCube* field[FIELD_H][FIELD_W]);
 
     void rotate();
-    void rotatedCheckPos(int field[FIELD_H][FIELD_W]);
+    void rotatedCheckPos(Brick3dCube* field[FIELD_H][FIELD_W]);
+    
     
     virtual int getBodyValue(int r, int c) = 0;
-
+    
+    
+    void update(float dt);
+    Brick3dCube** get3Dcubes() { return bodyBricks; }
+    
+    
+    enum SPEEDS { LATERAL , VERTICAL , ROTATE, ROWFALL };
+    void setBodyCubesSpeed(SPEEDS s);
 private:
     
 protected:
@@ -71,6 +83,8 @@ protected:
     int id;
     int rotation;
     int maxRotation;
+    
+    Brick3dCube* bodyBricks[4];
 };
 
 #endif	/* BRICK_H */
