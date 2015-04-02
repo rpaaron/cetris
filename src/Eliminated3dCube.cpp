@@ -21,7 +21,6 @@ Eliminated3dCube::Eliminated3dCube(int id, float x, float y, float z, float l) :
 
 
 Eliminated3dCube::~Eliminated3dCube() {
-    printf("eliminato cubo id %d\n", id);
 }
 
 bool Eliminated3dCube::updatePosition(float dt) {

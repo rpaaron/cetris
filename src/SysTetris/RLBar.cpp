@@ -12,12 +12,10 @@ RLBar::RLBar(int x) : Brick(x) {
     maxRotation = 4;
     
     Brick::init3dCubes();
-    printf("create rlbar\n");
 }
 
 
 RLBar::~RLBar() {
-    printf("deleting rlbar\n");
 }
 
 int RLBar::getBodyValue(int r, int c) { 

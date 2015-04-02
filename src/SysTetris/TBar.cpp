@@ -12,12 +12,10 @@ TBar::TBar(int x) : Brick(x) {
     maxRotation = 4;
     
     Brick::init3dCubes();
-    printf("create tbar\n");
 }
 
 
 TBar::~TBar() {
-    printf("deleting tbar\n");
 }
 
 int TBar::getBodyValue(int r, int c) { 

@@ -13,11 +13,9 @@ Quad::Quad(int x) : Brick(x) {
     maxRotation = 1;
     
     Brick::init3dCubes();
-    printf("create quad\n");
 }
 
 Quad::~Quad() {
-    printf("deleting quad\n");
 
 }
 

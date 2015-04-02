@@ -12,12 +12,10 @@ Bar::Bar(int x) : Brick(x) {
     maxRotation = 2;
     
     Brick::init3dCubes();
-    printf("create bar\n");
 }
 
 
 Bar::~Bar() {
-    printf("deleting bar\n");
 }
 
 int Bar::getBodyValue(int r, int c) { 

@@ -93,7 +93,6 @@ void Brick::setBodyCubesSpeed(SPEEDS s) {
         bodyBricks[i]->setSpeed(speed);
     }
     
-    printf("speed: %lf %d\n", speed, s);
 }
 
 

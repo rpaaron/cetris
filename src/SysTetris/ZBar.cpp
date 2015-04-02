@@ -12,12 +12,10 @@ ZBar::ZBar(int x) : Brick(x) {
     maxRotation = 2;
     
     Brick::init3dCubes();
-    printf("create zbar\n");
 }
 
 
 ZBar::~ZBar() {
-    printf("deleting zbar\n");
 }
 
 int ZBar::getBodyValue(int r, int c) { 
