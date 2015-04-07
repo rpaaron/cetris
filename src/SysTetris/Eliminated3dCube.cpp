@@ -6,9 +6,9 @@
  */
 #include <iostream>
 #include <stdlib.h>
-#include "SysTetris.h"
+#include "../SysTetris.h"
 #include "Eliminated3dCube.h"
-#include "Brick3dCube.h"
+#include "../Brick3dCube.h"
 
 Eliminated3dCube::Eliminated3dCube(int id, float x, float y, float z, float l) : 
     Brick3dCube(id) {

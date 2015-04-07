@@ -10,7 +10,7 @@
 #include "SysGame.h"
 #include "SysTetris.h"
 #include "SysTetris/Brick.h"
-#include "Eliminated3dCube.h"
+#include "SysTetris/Eliminated3dCube.h"
 
 
 SysTetris::SysTetris() {
@@ -119,11 +119,16 @@ void SysTetris::update(float dt) {
 }
 
 void SysTetris::draw() {
-        //Clear color buffer
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-  
+   
     glLoadIdentity();
-    glTranslatef(0, 0, -60);
+
+    //position of the field
+    glTranslatef(XField, YField, ZField);
+    glRotatef(XFieldRot, 1.0, 0, 0);
+    glRotatef(YFieldRot, 0, 1.0, 0);
+    glRotatef(ZFieldRot, 0, 0, 1.0);
+       
+    //move in the top left edge of the field
     glTranslatef(-(l*FIELD_W-1), l*FIELD_H, 0);
     
     glPushMatrix();
@@ -131,11 +136,12 @@ void SysTetris::draw() {
     int x = currentBrick->getX();
     int y = currentBrick->getY();
     
+    //draw current brick
     for(int i=0; i<4; i++) {
         Brick3dCube* elem = currentBrick->get3Dcubes()[i];
         
-        glLoadIdentity();
-        glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
+        glPopMatrix();
+        glPushMatrix();
         
         glTranslatef(2*l*elem->getXreal(), -2*l*elem->getYreal(), 0);
         drawColoredCube(l, colorFromId(elem->getID()));
@@ -144,7 +150,7 @@ void SysTetris::draw() {
     glPopMatrix();
     
     
-    //DISEGNA CUBI SUL FIELD
+    //draw cubes on field
     for(int i=0; i<FIELD_H; i++) 
         for(int j=0; j<FIELD_W; j++) { 
             Brick3dCube* tmp = field[i][j];
@@ -159,7 +165,7 @@ void SysTetris::draw() {
     
     glPushMatrix();
     
-    //disegna prossimo brick
+    //draw  next brick
     glTranslatef(2*l*(FIELD_W-2), -l*4, +10); //posizione
     glTranslatef(2*l*2, -2*l, 0.0f);          //accentra
     glRotatef(nextBrickRotation, 1, 1, 1);    //ruota
@@ -178,18 +184,15 @@ void SysTetris::draw() {
     
     //disegna cubi eliminati
     for(Eliminated3dCube* elem : freeBrick3dCube) {
-        glLoadIdentity();
-        glTranslatef(-(l*FIELD_W-1), l*FIELD_H, -60);
+        glPopMatrix();
+        glPushMatrix();
         
         glTranslatef(elem->getXreal(), elem->getYreal(), elem->getZreal());
         glRotatef(elem->getRotation(), 1.0f, 0.0f, 0.0f);
         drawColoredCube(l, colorFromId(elem->getID()));
-    }
+    }    
     
-    
-    //Update screen
-    SDL_GL_SwapBuffers();
-    
+    glPopMatrix();
 }
 
 void SysTetris::fallBrick() {

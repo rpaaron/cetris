@@ -8,7 +8,7 @@
 #ifndef ELIMINATED3DCUBE_H
 #define	ELIMINATED3DCUBE_H
 
-#include "Brick3dCube.h"
+#include "../Brick3dCube.h"
 
 
 class Eliminated3dCube : public Brick3dCube {

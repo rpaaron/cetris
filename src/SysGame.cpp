@@ -20,6 +20,8 @@ SysGame::~SysGame() {
 bool SysGame::load() {
     
     Tetris = new SysTetris();
+    Tetris->setXYZField(0,0,-60);
+    Tetris->setXYZFieldRot(0,0,0);
     return true;
 }
 
