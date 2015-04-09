@@ -26,6 +26,9 @@ public:
     void update(float dt);
     void draw();
     
+    void drawFieldLimits();
+    void updateBackColor(float dt);
+    
     void setXYZField(float x, float y, float z) { XField=x; YField=y; ZField=z;}
     void setXYZFieldRot(float x, float y, float z)
         { XFieldRot=x; YFieldRot=y; ZFieldRot=z; }
@@ -83,6 +86,7 @@ private:
     //control animation of next brick
     float nextBrickRotation=0;
 
+    COLOR backColor;
 };
 
 #endif	/* TETRIS_H */

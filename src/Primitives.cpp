@@ -11,6 +11,7 @@
 void drawColoredCube(float l, COLOR col) {
     
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     glLineWidth(2.5);
     
     glColor4f(col.r, col.g, col.b, col.a);
@@ -23,6 +24,10 @@ void drawColoredCube(float l, COLOR col) {
     glColor4f(0, 0, 0, 1);
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     drawCube(l);
+    
+    //reset changes
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 

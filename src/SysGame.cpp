@@ -31,7 +31,7 @@ void SysGame::update(float dt) {
     
     if(Tetris->gameOver) {
         delete Tetris;
-        Tetris = new SysTetris();
+        load();
     }
     
     Tetris->update(dt);

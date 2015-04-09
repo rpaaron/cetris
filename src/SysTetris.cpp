@@ -6,6 +6,7 @@
  */
 #include <stdlib.h>
 #include <time.h> 
+#include <cmath> 
 
 #include "SysGame.h"
 #include "SysTetris.h"
@@ -24,6 +25,8 @@ SysTetris::SysTetris() {
     
     currentBrick = newBrick();
     nextBrick = newBrick();
+    
+    backColor = colorFromId(currentBrick->getID());
 }
 
 
@@ -115,6 +118,7 @@ void SysTetris::update(float dt) {
     }
     
     currentBrick->update(dt); 
+    updateBackColor(dt);
 
 }
 
@@ -193,6 +197,8 @@ void SysTetris::draw() {
     }    
     
     glPopMatrix();
+
+    drawFieldLimits();
 }
 
 void SysTetris::fallBrick() {
@@ -346,4 +352,131 @@ void SysTetris::addFallSpeed(bool s) {
         AdditionFallSpeed = 70;
     else
         AdditionFallSpeed =0;
+}
+
+void SysTetris::drawFieldLimits() {
+    
+    COLOR col = backColor;
+    col.a = 0.20;
+        
+    glTranslatef(-l, l,0);
+    
+    glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    
+    //background
+    glBegin(GL_QUADS);
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( 0, 0, 0);    
+        glVertex3f( 2*l*FIELD_W, 0, 0); 
+        
+        glColor4f(col.r, col.g, col.b, col.a);
+        glVertex3f( 2*l*FIELD_W, -l*2*FIELD_H, 0);
+        glVertex3f( 0, -l*2*FIELD_H, 0);
+    glEnd();
+    
+    //left gradient
+    glBegin(GL_QUADS);
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( 0, 0, 0);    
+        
+        glColor4f(col.r, col.g, col.b, col.a);
+        glVertex3f( 0, -l*2*FIELD_H, 0);
+        
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( -4*l, -l*2*FIELD_H, 0);
+        glVertex3f( -4*l, 0, 0);
+    glEnd();
+    
+    //bottom gradient
+    glBegin(GL_QUADS);
+        glColor4f(col.r, col.g, col.b, col.a);
+        glVertex3f( 0, -l*2*FIELD_H, 0);
+        glVertex3f( l*2*FIELD_W, -l*2*FIELD_H, 0);
+        
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( l*2*FIELD_W, -l*2*FIELD_H-l*4, 0);
+        glVertex3f( 0, -l*2*FIELD_H-l*4, 0);
+    glEnd();
+    
+    //bottom left gradient
+    glBegin(GL_QUADS);
+        glColor4f(0,0,0.0,0.0); 
+        glVertex3f( -l*4, -l*2*FIELD_H, 0);
+            
+        glColor4f(col.r, col.g, col.b, col.a);
+        glVertex3f( 0, -l*2*FIELD_H, 0);
+        
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( 0, -l*2*FIELD_H -l*4, 0);
+        glVertex3f( -l*4, -l*2*FIELD_H-l*4, 0);
+    glEnd();
+    
+    
+
+    glTranslatef(l*2*FIELD_W, 0,0);
+    
+    //right gradient
+    glBegin(GL_QUADS);
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( 0, 0, 0);
+        
+        glColor4f(col.r, col.g, col.b, col.a);
+        glVertex3f( 0, -l*2*FIELD_H, 0);
+        
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( 4*l, -l*2*FIELD_H, 0);
+        glVertex3f( 4*l, 0, 0);
+    glEnd();
+    
+    //bottom right gradient
+    glBegin(GL_QUADS);
+        glColor4f(0,0,0.0,0.0); 
+        glVertex3f( l*4, -l*2*FIELD_H, 0);
+            
+        glColor4f(col.r, col.g, col.b, col.a);
+        glVertex3f( 0, -l*2*FIELD_H, 0);
+        
+        glColor4f(0,0,0.0,0.0);
+        glVertex3f( 0, -l*2*FIELD_H -l*4, 0);
+        glVertex3f( l*4, -l*2*FIELD_H-l*4, 0);
+    glEnd();
+
+}
+
+void SysTetris::updateBackColor(float dt) {
+    static float vel=2;
+    
+    COLOR nextCol = colorFromId(currentBrick->getID());
+    
+    if( backColor.r == nextCol.r && 
+        backColor.g == nextCol.g && 
+        backColor.b == nextCol.b    )
+        return;
+    
+    
+    float delta = 0.001;
+    float dr = fabs(backColor.r - nextCol.r);
+    float dg = fabs(backColor.g - nextCol.g);
+    float db = fabs(backColor.b - nextCol.b);
+    
+    if(dr > delta)
+        backColor.r > nextCol.r ? 
+            backColor.r -= dr*vel*dt :  backColor.r += dr*vel*dt;
+    else
+        backColor.r = nextCol.r;
+    
+    if(dg > delta)
+        backColor.g > nextCol.g ? 
+            backColor.g -= dg*vel*dt :  backColor.g += dg*vel*dt;
+    else
+        backColor.g = nextCol.g;
+    
+    if(db > delta)
+        backColor.b > nextCol.b ? 
+            backColor.b -= db*vel*dt :  backColor.b += db*vel*dt;
+    else
+        backColor.b = nextCol.b;
+    
+
 }
