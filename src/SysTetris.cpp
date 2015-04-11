@@ -59,6 +59,25 @@ void SysTetris::update(float dt) {
         
     float speed = FallSpeed+AdditionFallSpeed+ score/500;
     speed >= MaxFallSpeed? speed = MaxFallSpeed : speed; 
+    
+    static bool retToRot= false;
+    if(pause) {
+        speed=0;
+        YFieldRot += 600*dt;
+        retToRot= true;
+    } else if(retToRot) {
+        YFieldRot = fmod(YFieldRot,360);
+        lastYFieldRot = fmod(lastYFieldRot,360);
+        
+        YFieldRot < lastYFieldRot ? YFieldRot += 800*dt :  YFieldRot -= 800*dt;
+        
+        if(YFieldRot > lastYFieldRot -10 && YFieldRot < lastYFieldRot +10) {
+            YFieldRot = lastYFieldRot;
+            retToRot=false;
+        }
+    }
+    
+        
     FallTime += speed*dt;
     
     MinTimeMove >0 ? MinTimeMove -= MoveSpeed*dt : MinTimeMove;

@@ -22,6 +22,7 @@ bool SysGame::load() {
     Tetris = new SysTetris();
     Tetris->setXYZField(0,0,-60);
     Tetris->setXYZFieldRot(0,0,0);
+    Tetris->updateLastFieldRot();
     return true;
 }
 
@@ -55,6 +56,8 @@ void SysGame::keypressed(SDL_Event& ev) {
         Tetris->rotateBrick(); 
     if(ev.key.keysym.sym == SDLK_SPACE)
         Tetris->fallBrick(); 
+    if(ev.key.keysym.sym == SDLK_p)
+        Tetris->switchPause();
 }
 
 void SysGame::keyrelased(SDL_Event& ev) {

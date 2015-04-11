@@ -25,6 +25,7 @@ public:
     
     void update(float dt);
     void draw();
+    void switchPause() { pause = !pause; }
     
     void drawFieldLimits();
     void updateBackColor(float dt);
@@ -32,6 +33,11 @@ public:
     void setXYZField(float x, float y, float z) { XField=x; YField=y; ZField=z;}
     void setXYZFieldRot(float x, float y, float z)
         { XFieldRot=x; YFieldRot=y; ZFieldRot=z; }
+    void updateLastFieldRot()
+        { lastXFieldRot= XFieldRot;
+          lastYFieldRot= YFieldRot;
+          lastZFieldRot= ZFieldRot; }
+    
     void setCubel (float l) { this->l = l; }
     
     Brick3dCube* getField(int r, int c);
@@ -59,7 +65,8 @@ private:
     std::list <Eliminated3dCube*> freeBrick3dCube;
     
     //bool for control movement
-    bool Left=0, Right=0;
+    bool Left=false, Right=false;
+    bool pause=false;
     
     int score=0;
     
@@ -70,6 +77,7 @@ private:
     //3d position of the field
     float XField=0, YField=0, ZField=0;
     float XFieldRot=0, YFieldRot=0, ZFieldRot=0;
+    float lastXFieldRot=0, lastYFieldRot=0, lastZFieldRot=0;
     
     //lenght of half a cube
     float l = 1;
