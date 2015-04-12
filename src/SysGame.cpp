@@ -20,7 +20,7 @@ SysGame::~SysGame() {
 bool SysGame::load() {
     
     Tetris = new SysTetris();
-    Tetris->setXYZField(0,0,-60);
+    Tetris->setXYZField(0,-2,-60);
     Tetris->setXYZFieldRot(0,0,0);
     Tetris->updateLastFieldRot();
     return true;
@@ -30,7 +30,8 @@ bool SysGame::load() {
 
 void SysGame::update(float dt) {
     
-    if(Tetris->gameOver) {
+    if(Tetris->isGameOver() && !Tetris->isPaused()) {
+        Tetris->switchPause();
         delete Tetris;
         load();
     }
@@ -46,17 +47,20 @@ void SysGame::render() {
 
 void SysGame::keypressed(SDL_Event& ev) {
     
-    if(ev.key.keysym.sym == SDLK_LEFT)
-        Tetris->moveLeft(true);
-    if(ev.key.keysym.sym == SDLK_RIGHT)
-        Tetris->moveRight(true);
-    if(ev.key.keysym.sym == SDLK_DOWN)
-        Tetris->addFallSpeed(true);  
-    if(ev.key.keysym.sym == SDLK_UP)
-        Tetris->rotateBrick(); 
-    if(ev.key.keysym.sym == SDLK_SPACE)
-        Tetris->fallBrick(); 
-    if(ev.key.keysym.sym == SDLK_p)
+    if(!Tetris->isPaused()) {
+        if(ev.key.keysym.sym == SDLK_LEFT)
+            Tetris->moveLeft(true);
+        if(ev.key.keysym.sym == SDLK_RIGHT)
+            Tetris->moveRight(true);
+        if(ev.key.keysym.sym == SDLK_DOWN)
+            Tetris->addFallSpeed(true);  
+        if(ev.key.keysym.sym == SDLK_UP)
+            Tetris->rotateBrick(); 
+        if(ev.key.keysym.sym == SDLK_SPACE)
+            Tetris->fallBrick(); 
+    }
+    if( ev.key.keysym.sym == SDLK_p || 
+        (Tetris->isGameOver() && ev.key.keysym.sym == SDLK_RETURN) )
         Tetris->switchPause();
 }
 

@@ -34,8 +34,6 @@ private:
     float dt;
     
     SysGame *Game;
-    
-
 
 };
 

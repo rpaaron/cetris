@@ -23,6 +23,8 @@ SysTetris::SysTetris() {
     
     srand(time(0));
     
+    drawScore = new ScoreDraw(l);
+    
     currentBrick = newBrick();
     nextBrick = newBrick();
     
@@ -49,6 +51,8 @@ SysTetris::~SysTetris() {
         delete elem;
     
     freeBrick3dCube.clear();
+    
+    delete drawScore;
 }
 
 Brick3dCube* SysTetris::getField(int r, int c) {
@@ -63,7 +67,9 @@ void SysTetris::update(float dt) {
     static bool retToRot= false;
     if(pause) {
         speed=0;
-        YFieldRot += 600*dt;
+        
+        if(!gameOver)
+            YFieldRot += 600*dt;
         retToRot= true;
     } else if(retToRot) {
         YFieldRot = fmod(YFieldRot,360);
@@ -138,6 +144,8 @@ void SysTetris::update(float dt) {
     
     currentBrick->update(dt); 
     updateBackColor(dt);
+    
+    drawScore->update(score, dt);
 
 }
 
@@ -147,29 +155,35 @@ void SysTetris::draw() {
 
     //position of the field
     glTranslatef(XField, YField, ZField);
+    
+    glPushMatrix();
+    drawScore->draw();
+    glPopMatrix();
+    
     glRotatef(XFieldRot, 1.0, 0, 0);
     glRotatef(YFieldRot, 0, 1.0, 0);
     glRotatef(ZFieldRot, 0, 0, 1.0);
        
     //move in the top left edge of the field
     glTranslatef(-(l*FIELD_W-1), l*FIELD_H, 0);
-    
+       
     glPushMatrix();
-
+    
     int x = currentBrick->getX();
     int y = currentBrick->getY();
     
     //draw current brick
-    for(int i=0; i<4; i++) {
-        Brick3dCube* elem = currentBrick->get3Dcubes()[i];
-        
-        glPopMatrix();
-        glPushMatrix();
-        
-        glTranslatef(2*l*elem->getXreal(), -2*l*elem->getYreal(), 0);
-        drawColoredCube(l, colorFromId(elem->getID()));
+    if(currentBrick->toDraw()) {
+        for(int i=0; i<4; i++) {
+            Brick3dCube* elem = currentBrick->get3Dcubes()[i];
+
+            glPopMatrix();
+            glPushMatrix();
+
+            glTranslatef(2*l*elem->getXreal(), -2*l*elem->getYreal(), 0);
+            drawColoredCube(l, colorFromId(elem->getID()));
+        }
     }
-    
     glPopMatrix();
     
     
@@ -217,7 +231,10 @@ void SysTetris::draw() {
     
     glPopMatrix();
 
-    drawFieldLimits();
+    
+    glPushMatrix();
+    drawFieldLimits();    
+    glPopMatrix();    
 }
 
 void SysTetris::fallBrick() {
@@ -252,8 +269,11 @@ void SysTetris::createBrick() {
     currentBrick = nextBrick;
     nextBrick = newBrick();
     
-    if(!currentBrick->checkPos(currentBrick->getX(),currentBrick->getY(),field))
+    if(!currentBrick->checkPos(currentBrick->getX(),currentBrick->getY(),field)){
+        switchPause();
         gameOver=true;
+        currentBrick->setToDraw(false);
+    }    
 }
 
 

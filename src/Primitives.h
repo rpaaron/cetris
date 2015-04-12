@@ -17,7 +17,8 @@ struct COLOR {
     
 void drawCube(float l);
 void drawColoredCube(float l, COLOR col);
-
+void drawColoredCharCube(float l, COLOR col, SDL_Color charcol, const char* text);
+void drawCharQuad(float l, SDL_Color charcol, const char* text);
 
 #endif	/* PRIMITIVES_H */
 

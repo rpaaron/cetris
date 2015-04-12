@@ -16,6 +16,7 @@
 #include "SysTetris/Brick.h"
 #include "Brick3dCube.h"
 #include "SysTetris/Eliminated3dCube.h"
+#include "ScoreDraw.h"
 
 
 class SysTetris {
@@ -25,7 +26,12 @@ public:
     
     void update(float dt);
     void draw();
-    void switchPause() { pause = !pause; }
+    void switchPause() { 
+        pause = !pause; pause? 
+        drawScore->setPausePosition(): drawScore->setPlayPosition();
+    }
+    bool isPaused() { return pause; }
+    bool isGameOver() { return gameOver; }
     
     void drawFieldLimits();
     void updateBackColor(float dt);
@@ -54,8 +60,7 @@ public:
     
     void addFallSpeed(bool s);
     
-    bool gameOver=false;
-    
+   
 private:
     void checkFullLines();
     void removeLine(int n);
@@ -67,8 +72,10 @@ private:
     //bool for control movement
     bool Left=false, Right=false;
     bool pause=false;
+    bool gameOver=false;
     
     int score=0;
+    ScoreDraw *drawScore;
     
     //control move animation
     float MinTimeMove =0;

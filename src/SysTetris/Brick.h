@@ -76,6 +76,10 @@ public:
     
     enum SPEEDS { LATERAL , VERTICAL , ROTATE, ROWFALL };
     void setBodyCubesSpeed(SPEEDS s);
+    
+    bool toDraw() { return drawIt; }
+    void setToDraw(bool s) { drawIt = s; } 
+    
 private:
     
 protected:
@@ -83,6 +87,8 @@ protected:
     int id;
     int rotation;
     int maxRotation;
+    
+    bool drawIt = true;
     
     Brick3dCube* bodyBricks[4];
 };

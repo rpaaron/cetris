@@ -6,6 +6,7 @@
  */
 #include <stdio.h>
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
 #include <SDL/SDL_opengl.h>
 
 #include "SystemSDL.h"
@@ -72,6 +73,11 @@ bool SystemSDL::init() {
       return false;
     }
     
+    
+    //Initialize SDL_ttf
+    if( TTF_Init() == -1 )
+        return false;    
+    
     Game = new SysGame();
     
     return true;
@@ -94,7 +100,7 @@ void SystemSDL::loop() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
         
         Game->render();
-
+ 
         //Update screen
         SDL_GL_SwapBuffers();
         
