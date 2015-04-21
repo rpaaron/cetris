@@ -17,9 +17,11 @@
 SysTetris::SysTetris() {
     
     //init field
-    for(int i=0; i<FIELD_H; i++)
+    for(int i=0; i<FIELD_H; i++) {
+        toRemove[i] = false;
         for(int j=0; j<FIELD_W; j++)
             field[i][j] = NULL;
+    }
     
     srand(time(0));
     
@@ -68,10 +70,14 @@ void SysTetris::update(float dt) {
     if(pause) {
         speed=0;
         
+        //parte rotazioe della pausa
         if(!gameOver)
             YFieldRot += 600*dt;
+        
+        //quando riparte deve tornare alla rotazione iniziale
         retToRot= true;
     } else if(retToRot) {
+        //torna alla rotazione iniziale
         YFieldRot = fmod(YFieldRot,360);
         lastYFieldRot = fmod(lastYFieldRot,360);
         
@@ -151,8 +157,7 @@ void SysTetris::update(float dt) {
 
 void SysTetris::draw() {
    
-    glLoadIdentity();
-
+    
     //position of the field
     glTranslatef(XField, YField, ZField);
     
@@ -330,7 +335,6 @@ COLOR SysTetris::colorFromId(int id) {
 }
 
 void SysTetris::checkFullLines() {   
-    int toRemove[6];
     int k=0;
     
     for(int i=0; i< FIELD_H; i++) {
@@ -340,30 +344,41 @@ void SysTetris::checkFullLines() {
                 lineaPiena=false;
         }
         if(lineaPiena) {
-            toRemove[k] = i;
+            toRemove[i] = true;
             k = k+1;
         }
     }
 
     score += 100*k;
     
-    for(int i=0; i<k; i++) {
-        //save free bricks
+    removeLines();
+}
+
+void SysTetris::removeLines() {
+
+    for(int i=0; i<FIELD_H; i++) {
+        if(!toRemove[i])
+            continue;
+        
         for(int j=0; j<FIELD_W; j++) {
-            Brick3dCube *src= field[toRemove[i]][j];
+            Brick3dCube *src= field[i][j];
             
-            float x = src->getX()*2*l;
-            float y = -src->getY()*2*l;
-            
-            Eliminated3dCube *tmp= new Eliminated3dCube(src->getID(), x,y,0,l);
-            delete src;
-            
-            freeBrick3dCube.push_front(tmp);
+            if(src != NULL) {
+                float x = src->getX()*2*l;
+                float y = -src->getY()*2*l;
+
+                Eliminated3dCube *tmp= new Eliminated3dCube(src->getID(), x,y,0,l);
+                delete src;
+
+                freeBrick3dCube.push_front(tmp);
+            }
         }
         
-        removeLine(toRemove[i]);
+        removeLine(i);
+        toRemove[i] = false;
     }
 }
+
 
 void SysTetris::removeLine(int n) {
     if(n<1)

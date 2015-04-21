@@ -39,7 +39,7 @@ bool SystemSDL::init() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(45.0, ((float)width/(float)height), 0.1, 100.0);
+	gluPerspective(45.0, ((float)width/(float)height), 0.1, 1000.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

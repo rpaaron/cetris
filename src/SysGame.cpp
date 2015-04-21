@@ -9,6 +9,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include "SysGame.h"
+#include "BackgroundField.h"
 
 SysGame::SysGame() {
 }
@@ -17,12 +18,14 @@ SysGame::SysGame() {
 SysGame::~SysGame() {
 }
 
-bool SysGame::load() {
-    
+bool SysGame::load() {    
     Tetris = new SysTetris();
     Tetris->setXYZField(0,-2,-60);
     Tetris->setXYZFieldRot(0,0,0);
     Tetris->updateLastFieldRot();
+    
+    BackField = new BackgroundField(10);
+    
     return true;
 }
 
@@ -36,12 +39,16 @@ void SysGame::update(float dt) {
         load();
     }
     
+    BackField->update(dt);
     Tetris->update(dt);
 
 }
 
 void SysGame::render() {
-
+    glLoadIdentity();
+    BackField->draw();
+    
+    glLoadIdentity();
     Tetris->draw();
 }
 

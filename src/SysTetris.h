@@ -47,8 +47,8 @@ public:
     void setCubel (float l) { this->l = l; }
     
     Brick3dCube* getField(int r, int c);
-    
-    Brick* newBrick();
+ 
+    static Brick* newBrick();
     void createBrick();
     
     COLOR colorFromId(int id);
@@ -60,6 +60,10 @@ public:
     
     void addFallSpeed(bool s);
     
+    float getL() { return l; }
+    void setL(float l) { this->l = l; }
+    
+    void removeLines();
    
 private:
     void checkFullLines();
@@ -102,6 +106,8 @@ private:
     float nextBrickRotation=0;
 
     COLOR backColor;
+    
+    bool toRemove[FIELD_H];
 };
 
 #endif	/* TETRIS_H */

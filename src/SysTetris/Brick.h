@@ -80,6 +80,10 @@ public:
     bool toDraw() { return drawIt; }
     void setToDraw(bool s) { drawIt = s; } 
     
+    float getAngle() { return angle; };
+    void setAngle(float a) { angle = a; };
+    float getH() { return h; }
+    void setH(float h) { this->h = h; } 
 private:
     
 protected:
@@ -91,6 +95,9 @@ protected:
     bool drawIt = true;
     
     Brick3dCube* bodyBricks[4];
+    
+    float angle=0;
+    float h=0;
 };
 
 #endif	/* BRICK_H */

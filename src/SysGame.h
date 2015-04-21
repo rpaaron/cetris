@@ -12,6 +12,7 @@
 #include "SysTetris.h"
 #include "Primitives.h"
 #include "KeyEvent.h"
+#include "BackgroundField.h"
 
 
 class SysGame : KeyEvent {
@@ -30,6 +31,7 @@ public:
 
 private:
    SysTetris *Tetris;
+   BackgroundField *BackField;
 };
 
 #endif	/* GAME_H */
