@@ -31,6 +31,11 @@ BackgroundField::BackgroundField(int nCubes) {
 
 
 BackgroundField::~BackgroundField() {
+    
+    for(int i=0; i<nCubes; i++) {
+        if(Cubelist[i] != NULL)
+            delete Cubelist[i];
+    }    
     delete [] Cubelist;
 }
 
