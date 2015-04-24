@@ -83,7 +83,7 @@ void SysTetris::update(float dt) {
         
         YFieldRot < lastYFieldRot ? YFieldRot += 800*dt :  YFieldRot -= 800*dt;
         
-        if(YFieldRot > lastYFieldRot -10 && YFieldRot < lastYFieldRot +10) {
+        if(YFieldRot > lastYFieldRot -30 && YFieldRot < lastYFieldRot +30) {
             YFieldRot = lastYFieldRot;
             retToRot=false;
         }
@@ -96,6 +96,25 @@ void SysTetris::update(float dt) {
     
     int xtmp = currentBrick->getX();
     int ytmp = currentBrick->getY();
+
+
+    if(FallTime >=10) {        
+        if(currentBrick->checkPos( xtmp, ytmp+1,field)) {
+            //brick can go down
+            currentBrick->setBodyCubesSpeed(Brick::VERTICAL);
+            currentBrick->setX(xtmp);
+            currentBrick->setY(ytmp+1);
+        } else {
+            //brick on field
+            currentBrick->setBodyCubesSpeed(Brick::ROWFALL);
+            score += 10;
+            currentBrick->saveOnField(field);
+            checkFullLines();
+            
+            createBrick();
+        }    
+        FallTime=0;
+    }
     
     if(MinTimeMove<= 0) {
         if( Left && currentBrick->checkPos( xtmp-1, ytmp,field)) {
@@ -110,25 +129,10 @@ void SysTetris::update(float dt) {
         MinTimeMove=10;
     }
 
-    if(FallTime >=10) {        
-        if(currentBrick->checkPos( xtmp, ytmp+1,field)) {
-            currentBrick->setBodyCubesSpeed(Brick::VERTICAL);
-            currentBrick->setX(xtmp);
-            currentBrick->setY(ytmp+1);
-        } else {
-            currentBrick->setBodyCubesSpeed(Brick::ROWFALL);
-            score += 10;
-            currentBrick->saveOnField(field);
-            checkFullLines();
-            
-            createBrick();
-        }    
-        FallTime=0;
-    }
 
     nextBrickRotation += 40*dt;
            
-    
+    //update cube cordinates and position
     for(int i=0 ; i<FIELD_H ; i++) {
         for(int j=0; j<FIELD_W; j++) {
             if(field[i][j] != NULL) {
@@ -139,6 +143,7 @@ void SysTetris::update(float dt) {
         }
     }
     
+    //update eliminated cube position
     for( std::list<Eliminated3dCube*>::iterator elem = freeBrick3dCube.begin() ;
          elem != freeBrick3dCube.end() ; elem++) {
         

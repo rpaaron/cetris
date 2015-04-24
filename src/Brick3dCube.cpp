@@ -33,6 +33,7 @@ Brick3dCube::~Brick3dCube() {
 
 
 void Brick3dCube::updatePosition(float dt) {
+    float delta = 4*dt;
     
     float dx = fabs(Xreal - float(x));
     float dy = fabs(Yreal - float(y));
