@@ -45,7 +45,7 @@ private:
     float VelRot = 400;
     
     float TitleRot=0;
-    float TitleVel=40;
+    float TitleVel=200;
     
     char *Title;
     int TitleL;

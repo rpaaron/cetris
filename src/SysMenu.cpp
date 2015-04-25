@@ -39,7 +39,7 @@ void SysMenu::update(float dt) {
     TitleRot -= TitleVel*dt;
     if(tmp >=90) {
         NTurn++;
-        tmp=0;
+        tmp=tmp-90;
     }
 }
 
