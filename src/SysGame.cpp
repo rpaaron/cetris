@@ -70,14 +70,14 @@ void SysGame::update(float dt) {
 
 }
 
-void SysGame::render() {   
+void SysGame::render() {  
+        
     glLoadIdentity();
+    BackField->draw();
     
-    glPushMatrix();
-    
+    glLoadIdentity();
+
     glRotatef(RotMenuPlayAnim,0,1,0);
-    
-    
     glPushMatrix();
     if(RotMenuPlayAnim <= 80)
         Menu->draw();
@@ -86,10 +86,7 @@ void SysGame::render() {
     glRotatef(-90,0,1,0);
     if(RotMenuPlayAnim >= 20)
     Tetris->draw();
-    
-    
-    glPopMatrix();
-    BackField->draw();
+
 
 }
 
