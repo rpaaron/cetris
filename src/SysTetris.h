@@ -92,7 +92,7 @@ private:
     
     //control move animation
     float MinTimeMove =0;
-    const float MoveSpeed = 100;
+    const float MoveSpeed = 80;
     
     //3d position of the field
     float XField=0, YField=0, ZField=0;

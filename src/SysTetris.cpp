@@ -543,11 +543,13 @@ void SysTetris::updateBackColor(float dt) {
 void SysTetris::keypressed(SDL_Event& ev) {
 
     if(!pause) {
-        if(ev.key.keysym.sym == SDLK_LEFT)
+        if(ev.key.keysym.sym == SDLK_LEFT) {
             Left =true;
-        if(ev.key.keysym.sym == SDLK_RIGHT)
+            MinTimeMove =0;
+        } if(ev.key.keysym.sym == SDLK_RIGHT) {
             Right=true;
-        if(ev.key.keysym.sym == SDLK_DOWN)
+            MinTimeMove =0;
+        } if(ev.key.keysym.sym == SDLK_DOWN)
             addFallSpeed(true);  
         if(ev.key.keysym.sym == SDLK_UP)
             rotateBrick(); 
