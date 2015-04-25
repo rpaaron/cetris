@@ -8,18 +8,21 @@
 #define FIELD_H 20
 #define FIELD_W 10
 
+#include <SDL/SDL.h>
 #include <list>
 
 #ifndef SYSTETRIS_H
 #define	SYSTETRIS_H
 
+
+#include "KeyEvent.h"
 #include "SysTetris/Brick.h"
 #include "Brick3dCube.h"
 #include "SysTetris/Eliminated3dCube.h"
 #include "ScoreDraw.h"
 
 
-class SysTetris {
+class SysTetris : KeyEvent {
 public:
     SysTetris();
     virtual ~SysTetris();
@@ -64,6 +67,12 @@ public:
     void setL(float l) { this->l = l; }
     
     void removeLines();
+    
+
+    virtual void keypressed(SDL_Event& ev);
+    virtual void keyrelased(SDL_Event& ev);
+
+
    
 private:
     void checkFullLines();

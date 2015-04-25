@@ -54,29 +54,10 @@ void SysGame::render() {
 
 void SysGame::keypressed(SDL_Event& ev) {
     
-    if(!Tetris->isPaused()) {
-        if(ev.key.keysym.sym == SDLK_LEFT)
-            Tetris->moveLeft(true);
-        if(ev.key.keysym.sym == SDLK_RIGHT)
-            Tetris->moveRight(true);
-        if(ev.key.keysym.sym == SDLK_DOWN)
-            Tetris->addFallSpeed(true);  
-        if(ev.key.keysym.sym == SDLK_UP)
-            Tetris->rotateBrick(); 
-        if(ev.key.keysym.sym == SDLK_SPACE)
-            Tetris->fallBrick(); 
-    }
-    if( ev.key.keysym.sym == SDLK_p || 
-        (Tetris->isGameOver() && ev.key.keysym.sym == SDLK_RETURN) )
-        Tetris->switchPause();
+    Tetris->keypressed(ev);
 }
 
 void SysGame::keyrelased(SDL_Event& ev) {
     
-    if(ev.key.keysym.sym == SDLK_LEFT)
-        Tetris->moveLeft(false);
-    if(ev.key.keysym.sym == SDLK_RIGHT)
-        Tetris->moveRight(false);
-    if(ev.key.keysym.sym == SDLK_DOWN)
-        Tetris->addFallSpeed(false);
+    Tetris->keyrelased(ev);
 }

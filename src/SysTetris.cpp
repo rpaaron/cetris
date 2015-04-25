@@ -539,3 +539,32 @@ void SysTetris::updateBackColor(float dt) {
     
 
 }
+
+void SysTetris::keypressed(SDL_Event& ev) {
+
+    if(!pause) {
+        if(ev.key.keysym.sym == SDLK_LEFT)
+            Left =true;
+        if(ev.key.keysym.sym == SDLK_RIGHT)
+            Right=true;
+        if(ev.key.keysym.sym == SDLK_DOWN)
+            addFallSpeed(true);  
+        if(ev.key.keysym.sym == SDLK_UP)
+            rotateBrick(); 
+        if(ev.key.keysym.sym == SDLK_SPACE)
+            fallBrick(); 
+    }
+    if( ev.key.keysym.sym == SDLK_p || 
+        (gameOver && ev.key.keysym.sym == SDLK_RETURN) )
+        switchPause();
+}
+
+void SysTetris::keyrelased(SDL_Event& ev) {
+    
+    if(ev.key.keysym.sym == SDLK_LEFT)
+        Left =false;
+    if(ev.key.keysym.sym == SDLK_RIGHT)
+        Right =false;
+    if(ev.key.keysym.sym == SDLK_DOWN)
+        addFallSpeed(false);
+}
