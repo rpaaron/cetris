@@ -28,12 +28,25 @@ bool SystemSDL::init() {
       //Initialize SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
       { return false; } //Create Window
-    if( SDL_SetVideoMode( width, height, bpp, SDL_OPENGL) == NULL )
-      { return false; } //Initialize OpenGL
+
 
     //Set caption
     SDL_WM_SetCaption( "Tetris3d", NULL );
     
+    SDL_Surface *icon = SDL_LoadBMP("data/icon.bmp");
+    if(icon == NULL) {
+         printf("Icon load error: %s\n", SDL_GetError());
+    } else {
+        SDL_SetColorKey ( icon , SDL_SRCCOLORKEY, 
+                SDL_MapRGB( icon->format, 255, 0, 255) );
+    } 
+    
+    SDL_WM_SetIcon(icon, NULL);
+    
+
+    if( SDL_SetVideoMode( width, height, bpp, SDL_OPENGL) == NULL )
+      { return false; } //Initialize OpenGL
+
 
 	glClearColor(0, 0, 0, 0);
 
