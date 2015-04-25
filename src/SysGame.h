@@ -13,6 +13,7 @@
 #include "Primitives.h"
 #include "KeyEvent.h"
 #include "BackgroundField.h"
+#include "SysMenu.h"
 
 
 class SysGame : KeyEvent {
@@ -28,10 +29,21 @@ public:
     virtual void keypressed(SDL_Event& ev);
     virtual void keyrelased(SDL_Event& ev);
 
+    bool toQuit() { return quit;}
 
 private:
+   SysMenu *Menu;
    SysTetris *Tetris;
    BackgroundField *BackField;
+   
+   float CubeL = 1;
+   
+   
+   float RotMenuPlayAnim =0;
+   float RotMenuPlay =0;
+   float RotVel= 180;
+   
+   float quit=false;
 };
 
 #endif	/* GAME_H */

@@ -8,6 +8,8 @@
 #ifndef KeyEVENT_H
 #define	KeyEVENT_H
 
+#include <SDL/SDL.h>
+
 class KeyEvent {
 public:
     virtual void keypressed(SDL_Event &ev) = 0;

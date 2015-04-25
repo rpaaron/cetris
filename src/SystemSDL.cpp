@@ -120,5 +120,8 @@ void SystemSDL::eventUpdate() {
             Game->keyrelased(event);
         }
     }
+    
+    if(Game->toQuit())
+        quitLoop = true;
 }
 

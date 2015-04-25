@@ -36,7 +36,9 @@ void drawCharQuad(float l, SDL_Color charcol, const char* text) {
     glEnable(GL_TEXTURE_2D);
     
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); 
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glPolygonMode(GL_FRONT, GL_FILL);
+    
+    glPolygonMode(GL_BACK, GL_LINE); //try
 
     
     GLuint charText;
