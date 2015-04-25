@@ -5,6 +5,7 @@
  * Created on 25 aprile 2015, 13.05
  */
 #include <cmath>
+#include <string>
 
 #include "Primitives.h"
 #include "SysMenu.h"
@@ -12,9 +13,14 @@
 
 SysMenu::SysMenu(float l) {
     this->l = l;
+    
+    Title = new char [100];
+    strcpy(Title, "Tetris3d by Cecco4 ");
+    TitleL = strlen(Title);
 }
 
 SysMenu::~SysMenu() {
+    delete [] Title;
 }
 
 
@@ -28,12 +34,23 @@ void SysMenu::update(float dt) {
         MenuRotAnim = MenuRot;
     }
     
+    static float tmp =0;
+    tmp += TitleVel*dt;
+    TitleRot -= TitleVel*dt;
+    if(tmp >=90) {
+        NTurn++;
+        tmp=0;
+    }
 }
 
 
 void SysMenu::draw() {
+    
+    glPushMatrix();
+    drawTitle();
+    glPopMatrix();
 
-    glTranslatef(0,0,-20);
+    glTranslatef(0,-4*l,-20);
     glRotatef(MenuRotAnim, 1,0,0);
     glPushMatrix();
     
@@ -67,6 +84,34 @@ void SysMenu::draw() {
     glPopMatrix();
 
 }
+
+void SysMenu::drawTitle() {
+    
+    glTranslatef(0,2*l,-20);
+    glRotatef(TitleRot,0,1,0);
+    
+    COLOR Cubecol = {0,0,1.0,0.2};
+    SDL_Color Textcol = {255,255,0,0};
+    
+    drawColoredCube(2*l, Cubecol);
+    
+    
+    static int pos[] = {0,1,2,3};
+    pos[(NTurn-1)%4] = (NTurn+3)%TitleL;
+    
+    char s[4] = " # ";
+    s[1] = Title[pos[0]];    drawCharQuad(2*l, Textcol, s);
+    
+    glRotatef(90,0,1,0);
+    s[1] = Title[pos[1]];    drawCharQuad(2*l, Textcol, s);
+    
+    glRotatef(90,0,1,0);
+    s[1] = Title[pos[2]];    drawCharQuad(2*l, Textcol, s);
+    
+    glRotatef(90,0,1,0);
+    s[1] = Title[pos[3]];    drawCharQuad(2*l, Textcol, s);
+}
+
 
 void SysMenu::switchEntry() {
     if(currentEntry == PLAY_e) currentEntry = EXIT_e;

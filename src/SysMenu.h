@@ -23,6 +23,7 @@ public:
     virtual void keypressed(SDL_Event& ev);
     virtual void keyrelased(SDL_Event& ev);
 
+    void drawTitle();
     
     enum stat { MENU, PLAY, EXIT};
     enum entry { PLAY_e, EXIT_e};
@@ -42,6 +43,15 @@ private:
     float MenuRot = 0;
     float MenuRotAnim =0;
     float VelRot = 400;
+    
+    float TitleRot=0;
+    float TitleVel=40;
+    
+    char *Title;
+    int TitleL;
+    int NTurn=0;
+
+
 };
 
 #endif	/* SYSMENU_H */
