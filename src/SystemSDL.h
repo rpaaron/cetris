@@ -8,7 +8,6 @@
 #ifndef SYSTEMGL_H
 #define	SYSTEMGL_H
 
-
 #include "Primitives.h"
 #include "SysGame.h"
 

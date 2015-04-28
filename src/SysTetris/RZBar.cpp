@@ -4,7 +4,7 @@
  * 
  * Created on 24 marzo 2015, 18.23
  */
-#include <stdio.h>
+
 #include "RZBar.h"
 
 RZBar::RZBar(int x) : Brick(x) {

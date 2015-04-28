@@ -4,7 +4,7 @@
  * 
  * Created on 24 marzo 2015, 18.23
  */
-#include <stdio.h>
+
 #include "TBar.h"
 
 TBar::TBar(int x) : Brick(x) {

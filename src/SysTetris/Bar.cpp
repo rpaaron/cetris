@@ -4,7 +4,7 @@
  * 
  * Created on 24 marzo 2015, 18.23
  */
-#include <stdio.h>
+
 #include "Bar.h"
 
 Bar::Bar(int x) : Brick(x) {

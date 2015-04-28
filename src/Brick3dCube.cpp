@@ -4,7 +4,7 @@
  * 
  * Created on 30 marzo 2015, 22.47
  */
-#include <iostream>
+
 #include <cmath>
 #include "Brick3dCube.h"
 

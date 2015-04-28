@@ -4,14 +4,12 @@
  * 
  * Created on 24 marzo 2015, 17.36
  */
+
 #include <stdlib.h>
-#include <time.h> 
-#include <cmath> 
+#include <cmath>
 
 #include "SysGame.h"
 #include "SysTetris.h"
-#include "SysTetris/Brick.h"
-#include "SysTetris/Eliminated3dCube.h"
 
 
 SysTetris::SysTetris() {

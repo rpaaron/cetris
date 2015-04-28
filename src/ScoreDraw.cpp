@@ -4,15 +4,14 @@
  * 
  * Created on 12 aprile 2015, 15.13
  */
+
 #include <iostream>
-#include <string>
 #include <cmath>
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 
 #include "ScoreDraw.h"
 #include "SysTetris.h"
-#include "Primitives.h"
 
 ScoreDraw::ScoreDraw(float l) {
     this->l = l;

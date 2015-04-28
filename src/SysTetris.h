@@ -8,19 +8,24 @@
 #define FIELD_H 20
 #define FIELD_W 10
 
-#include <SDL/SDL.h>
-#include <list>
-
 #ifndef SYSTETRIS_H
 #define	SYSTETRIS_H
 
 
+#include <SDL/SDL.h>
+#include <list>
+#include <pthread.h>
+
 #include "KeyEvent.h"
-#include "SysTetris/Brick.h"
 #include "Brick3dCube.h"
 #include "SysTetris/Eliminated3dCube.h"
 #include "ScoreDraw.h"
+#include "Primitives.h"
 
+#include "SysTetris/Brick.h"
+
+
+class Brick;
 
 class SysTetris : KeyEvent {
 public:

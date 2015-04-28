@@ -5,11 +5,6 @@
  * Created on 23 marzo 2015, 21.35
  */
 
-#include <cstdlib>
-#include <iostream>
-#include <SDL/SDL.h>
-#include <SDL/SDL_opengl.h>
-
 #include "SystemSDL.h"
 
 using namespace std;

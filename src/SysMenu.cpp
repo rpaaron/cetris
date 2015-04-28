@@ -4,6 +4,7 @@
  * 
  * Created on 25 aprile 2015, 13.05
  */
+
 #include <cmath>
 #include <string>
 

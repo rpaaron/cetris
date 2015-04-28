@@ -4,7 +4,7 @@
  * 
  * Created on 24 marzo 2015, 18.23
  */
-#include <stdio.h>
+
 #include "ZBar.h"
 
 ZBar::ZBar(int x) : Brick(x) {

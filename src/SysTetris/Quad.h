@@ -8,9 +8,7 @@
 #ifndef QUAD_H
 #define	QUAD_H
 
-#ifndef BRICK_H
-    #include "Brick.h"
-#endif
+#include "Brick.h"
 
 class Quad : public Brick {
 public:

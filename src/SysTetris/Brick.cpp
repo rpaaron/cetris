@@ -5,9 +5,7 @@
  * Created on 24 marzo 2015, 18.16
  */
 
-#include <iostream>
 #include <SDL/SDL.h>
-#include <SDL/SDL_opengl.h>
 
 #include "Brick.h"
 

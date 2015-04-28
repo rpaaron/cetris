@@ -4,7 +4,6 @@
  * 
  * Created on 24 marzo 2015, 18.23
  */
-#include <stdio.h>
 #include "RLBar.h"
 
 RLBar::RLBar(int x) : Brick(x) {

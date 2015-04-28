@@ -5,14 +5,8 @@
  * Created on 13 aprile 2015, 21.47
  */
 #include <iostream>
-#include <cmath>
-#include <ctime>
-#include <stdlib.h>
 #include <GL/gl.h>
 #include "BackgroundField.h"
-#include "Primitives.h"
-#include "SysTetris/Brick.h"
-#include "SysGame.h"
 
 BackgroundField::BackgroundField(int nCubes) {
     this->nCubes = nCubes;

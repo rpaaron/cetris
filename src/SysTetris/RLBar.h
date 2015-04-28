@@ -8,9 +8,7 @@
 #ifndef RLBAR_H
 #define	RLBAR_H
 
-#ifndef BRICK_H
-    #include "Brick.h"
-#endif
+#include "Brick.h"
 
 class RLBar : public Brick {
 public:

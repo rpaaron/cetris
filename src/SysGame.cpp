@@ -9,8 +9,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include "SysGame.h"
-#include "BackgroundField.h"
-#include "SysMenu.h"
 
 SysGame::SysGame() {
     Menu = new SysMenu(CubeL);

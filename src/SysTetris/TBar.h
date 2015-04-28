@@ -8,9 +8,7 @@
 #ifndef TBAR_H
 #define	TBAR_H
 
-#ifndef BRICK_H
-    #include "Brick.h"
-#endif
+#include "Brick.h"
 
 class TBar : public Brick {
 public:
