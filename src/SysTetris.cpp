@@ -81,7 +81,7 @@ void SysTetris::update(float dt) {
         
         YFieldRot < lastYFieldRot ? YFieldRot += 800*dt :  YFieldRot -= 800*dt;
         
-        if(YFieldRot > lastYFieldRot -30 && YFieldRot < lastYFieldRot +30) {
+        if(YFieldRot > lastYFieldRot -dt*800*2 && YFieldRot < lastYFieldRot +dt*800*2) {
             YFieldRot = lastYFieldRot;
             retToRot=false;
         }

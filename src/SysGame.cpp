@@ -35,7 +35,7 @@ bool SysGame::load() {
 void SysGame::update(float dt) {
     
     float delta = abs(RotMenuPlayAnim - RotMenuPlay);
-    if (delta >10) {
+    if (delta >2*dt*RotVel) {
         RotMenuPlayAnim<RotMenuPlay?
             RotMenuPlayAnim += RotVel*dt : RotMenuPlayAnim -= RotVel*dt;
     } else {

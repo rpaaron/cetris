@@ -27,14 +27,14 @@ SysMenu::~SysMenu() {
 
 void SysMenu::update(float dt) {
 
-    float delta = fabs(fmod(MenuRot,360) - fmod(MenuRotAnim,360));
-    if(delta > 10) {
+    float delta = fabs(MenuRot - MenuRotAnim);
+    if(delta > dt*VelRot) {
         MenuRotAnim < MenuRot? 
             MenuRotAnim += VelRot*dt : MenuRotAnim -= VelRot*dt;
     } else {
         MenuRotAnim = MenuRot;
     }
-    
+
     static float tmp =0;
     tmp += TitleVel*dt;
     TitleRot -= TitleVel*dt;

@@ -49,22 +49,25 @@ void ScoreDraw::update(int score, float dt) {
 }
 
 void ScoreDraw::moveToPos(float dt) {
-    float delta= 0.01;
+    float delta;
     float dx = fabs(Xreal - Xpos);
     float dy = fabs(Yreal - Ypos);
     float dz = fabs(Zreal - Zpos);
     
-     
+
+    delta = dx*speed*dt;
     if(dx > delta)
         Xreal > Xpos ? Xreal -= dx*speed*dt : Xreal += dx*speed*dt;
     else
         Xreal = Xpos;
-    
+
+    delta = dy*speed*dt;
     if(dy > delta)
         Yreal > Ypos ? Yreal -= dy*speed*dt : Yreal += dy*speed*dt;
     else
         Yreal = Ypos;
-    
+
+    delta = dz*speed*dt;
     if(dz > delta)
         Zreal > Zpos ? Zreal -= dz*speed*dt : Zreal += dz*speed*dt;
     else
@@ -72,6 +75,8 @@ void ScoreDraw::moveToPos(float dt) {
 
 
     float dxr = fabs(XrealRot - Xrot);
+
+    delta = dxr*speed*dt;
     if(dxr > delta)
         XrealRot > Xrot ? XrealRot -= dxr*speed*dt : XrealRot += dxr*speed*dt;
     else

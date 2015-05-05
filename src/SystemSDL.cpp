@@ -107,13 +107,14 @@ void SystemSDL::loop() {
         timer = SDL_GetTicks();
 
         eventUpdate();
+
         Game->update(dt);
-        
+
         //Clear color buffer
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
-        
+
         Game->render();
- 
+
         //Update screen
         SDL_GL_SwapBuffers();
         

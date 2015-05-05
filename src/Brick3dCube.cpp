@@ -33,16 +33,18 @@ Brick3dCube::~Brick3dCube() {
 
 
 void Brick3dCube::updatePosition(float dt) {
-    float delta = 4*dt;
-    
+
+    float delta;
     float dx = fabs(Xreal - float(x));
     float dy = fabs(Yreal - float(y));
-    
+
+    delta = dx*speed*dt;
     if(dx > delta)
         Xreal > x ? Xreal -= dx*speed*dt : Xreal += dx*speed*dt;
     else
         Xreal = x;
-    
+
+    delta = dy*speed*dt;
     if(dy > delta)
         Yreal > y ? Yreal -= dy*speed*dt : Yreal += dy*speed*dt;
     else
