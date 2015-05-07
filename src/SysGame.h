@@ -14,6 +14,7 @@
 #include "KeyEvent.h"
 #include "BackgroundField.h"
 #include "SysMenu.h"
+#include "SysLogo.h"
 
 
 class SysGame : KeyEvent {
@@ -32,18 +33,19 @@ public:
     bool toQuit() { return quit;}
 
 private:
-   SysMenu *Menu;
-   SysTetris *Tetris;
-   BackgroundField *BackField;
-   
-   float CubeL = 1;
-   
-   
-   float RotMenuPlayAnim =0;
-   float RotMenuPlay =0;
-   float RotVel= 180;
-   
-   float quit=false;
+    SysLogo *Logo;
+    SysMenu *Menu;
+    SysTetris *Tetris;
+    BackgroundField *BackField;
+
+    float CubeL = 1;
+
+
+    float RotMenuPlayAnim = -90;
+    float RotMenuPlay = -90;
+    float RotVel= 180;
+
+    float quit=false;
 };
 
 #endif	/* GAME_H */

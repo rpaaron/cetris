@@ -12,13 +12,14 @@
 
 SysGame::SysGame() {
     Menu = new SysMenu(CubeL);
+    Logo = new SysLogo();
 }
 
 
 SysGame::~SysGame() {
 }
 
-bool SysGame::load() {  
+bool SysGame::load() {
     Tetris = new SysTetris();
     Tetris->setL(CubeL);
     Tetris->setXYZField(0,-2,-60);
@@ -64,12 +65,23 @@ void SysGame::update(float dt) {
         RotMenuPlay =-90;
         if(RotMenuPlayAnim == -90)
             quit = true;
+    } else if(Menu->getStat() == Menu->LOGO) {
+        RotMenuPlay =-90;
+        if(Logo != NULL && !Logo->isEnd()) {
+            Logo->update(dt);
+        } else {
+            Menu->setStat(Menu->MENU);
+        }
+    }
+
+    if(Logo != NULL && RotMenuPlayAnim>=-20) {
+        delete Logo;
+        Logo = NULL;
     }
 
 }
 
-void SysGame::render() {  
-        
+void SysGame::render() {
     glLoadIdentity();
     BackField->draw();
     
@@ -80,12 +92,18 @@ void SysGame::render() {
     if(RotMenuPlayAnim <= 80)
         Menu->draw();
     glPopMatrix();
-    
+
+    glPushMatrix();
     glRotatef(-90,0,1,0);
     if(RotMenuPlayAnim >= 20)
-    Tetris->draw();
+        Tetris->draw();
+    glPopMatrix();
 
-
+    glPushMatrix();
+    glRotatef(90,0,1,0);
+    if(RotMenuPlayAnim<=-20 && Logo != NULL)
+        Logo->draw();
+    glPopMatrix();
 }
 
 void SysGame::keypressed(SDL_Event& ev) {

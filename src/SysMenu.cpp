@@ -120,19 +120,24 @@ void SysMenu::switchEntry() {
 }
 
 void SysMenu::keypressed(SDL_Event& ev) {
-    if(ev.key.keysym.sym == SDLK_UP) {
-        MenuRot += 180;
-        switchEntry();
-    } if(ev.key.keysym.sym == SDLK_DOWN) {
-        MenuRot -= 180;
-        switchEntry();
-    }
 
-    if(ev.key.keysym.sym == SDLK_RETURN) {
-        if(currentEntry == PLAY_e)
-            setStat(PLAY);
-        if(currentEntry == EXIT_e)
-            setStat(EXIT);
+    if(MenuRotAnim == MenuRot) {
+        if (ev.key.keysym.sym == SDLK_UP) {
+            MenuRot += 180;
+            switchEntry();
+        }
+        if (ev.key.keysym.sym == SDLK_DOWN) {
+            MenuRot -= 180;
+            switchEntry();
+        }
+
+
+        if (ev.key.keysym.sym == SDLK_RETURN) {
+            if (currentEntry == PLAY_e)
+                setStat(PLAY);
+            if (currentEntry == EXIT_e)
+                setStat(EXIT);
+        }
     }
 }
 

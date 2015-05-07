@@ -25,7 +25,7 @@ public:
 
     void drawTitle();
     
-    enum stat { MENU, PLAY, EXIT};
+    enum stat { MENU, PLAY, EXIT, LOGO};
     enum entry { PLAY_e, EXIT_e};
     
     stat getStat() { return Stat; };
@@ -34,7 +34,7 @@ public:
     void switchEntry();
     
 private:
-    stat Stat= MENU;
+    stat Stat= LOGO;
     
     entry currentEntry = PLAY_e;
     

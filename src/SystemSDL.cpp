@@ -57,15 +57,15 @@ bool SystemSDL::init() {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	
-        glShadeModel(GL_SMOOTH);
+    glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
-        glClearDepth(1.0f); 
+    glClearDepth(1.0f);
         
 	glDepthFunc(GL_LEQUAL);
 	//orion spec:
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-        glEnable(GL_BLEND);
+    glEnable(GL_BLEND);
         
 	glEnable(GL_LIGHTING);
 	GLfloat OrionEnv [] = { 0.2, 0.2, 0.2, 1};
@@ -76,8 +76,7 @@ bool SystemSDL::init() {
 	glLightfv(GL_LIGHT1, GL_POSITION, OrionPos);
 	glEnable(GL_LIGHT1);
 
-          
-        glEnable(GL_COLOR_MATERIAL);    
+    glEnable(GL_COLOR_MATERIAL);
         
     //Check for error
     GLenum error = glGetError();
