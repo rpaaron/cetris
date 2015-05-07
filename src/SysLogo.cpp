@@ -10,7 +10,7 @@ SysLogo::SysLogo() {
         for (int j = 0; j < lmap; j++) {
             if(map[i][j]>0) {
                 Cube3d *tmp = new Cube3d(-lmap*l+l+ j*2*l, lmap*l - i*2*l, -20.f, 0);
-                tmp->setCol({0.6,0.3,0.0,0.2});
+                tmp->setCol({0.8,0.4,0.0,0.2});
                 tmp->setMove(false);
                 tmp->goTol(l*1.5);
                 cubes.push_front(tmp);
