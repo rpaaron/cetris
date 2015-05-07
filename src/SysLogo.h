@@ -22,7 +22,7 @@ public:
 private:
     std::list <Cube3d*> cubes;
 
-    float l=0.15;
+    float l=0.20;
     bool end=false;
 
     static const int lmap=48;

@@ -32,9 +32,9 @@ void SysLogo::update(float dt) {
          elem != cubes.end() ; elem++) {
         (*elem)->update(dt);
 
-        if(wait >=15)
+        if(wait >=10)
             (*elem)->setMove(true);
-        if(wait >=16)
+        if(wait >=11)
             (*elem)->goTol(l);
     }
 
