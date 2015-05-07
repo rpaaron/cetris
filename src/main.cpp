@@ -10,7 +10,7 @@
 using namespace std;
 
 
-int main() {
+int main(int argc,char *argv[]) {
  
     SystemSDL *sys = new SystemSDL(480, 640, 32);
 
@@ -18,5 +18,7 @@ int main() {
         return 1;
 
     sys->loop();
+
+    return 0;
 }
 

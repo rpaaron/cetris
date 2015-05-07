@@ -98,8 +98,10 @@ void SysMenu::drawTitle() {
     
     
     static int pos[] = {0,1,2,3};
-    pos[(NTurn-1)%4] = (NTurn+3)%TitleL;
-    
+
+    if(NTurn !=0)
+    	pos[(NTurn-1)%4] = (NTurn+3)%TitleL;
+
     char s[4] = " # ";
     s[1] = Title[pos[0]];    drawCharQuad(2*l, Textcol, s);
     

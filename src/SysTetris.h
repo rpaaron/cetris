@@ -14,7 +14,7 @@
 
 #include <SDL/SDL.h>
 #include <list>
-#include <pthread.h>
+#include <time.h>
 
 #include "KeyEvent.h"
 #include "Brick3dCube.h"

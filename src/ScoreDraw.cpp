@@ -13,6 +13,8 @@
 #include "ScoreDraw.h"
 #include "SysTetris.h"
 
+inline std::string to_string(int number);
+
 ScoreDraw::ScoreDraw(float l) {
     this->l = l;
     //position relative to the center of field
@@ -99,9 +101,9 @@ void ScoreDraw::draw() {
     drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "e");
     glTranslatef(2*scorel, 0, 0);
     drawColoredCube(scorel, {0,0,1.0,0.2});
-    
-    std::string realS = std::to_string(realScore);
-    std::string S = std::to_string(displayScore);
+
+    std::string realS = to_string(realScore);
+    std::string S = to_string(displayScore);
     
     for(int i=4; i>=0; i--) {
         char Sc[] = "0";
@@ -147,3 +149,31 @@ void ScoreDraw::setPlayPosition() {
 }
 
 
+inline std::string to_string(int number){
+    std::string number_string = "";
+    char ones_char;
+    int ones = 0;
+    while(true){
+        ones = number % 10;
+        switch(ones){
+            case 0: ones_char = '0'; break;
+            case 1: ones_char = '1'; break;
+            case 2: ones_char = '2'; break;
+            case 3: ones_char = '3'; break;
+            case 4: ones_char = '4'; break;
+            case 5: ones_char = '5'; break;
+            case 6: ones_char = '6'; break;
+            case 7: ones_char = '7'; break;
+            case 8: ones_char = '8'; break;
+            case 9: ones_char = '9'; break;
+            default : printf("Trouble converting number to string.\n");
+        }
+        number -= ones;
+        number_string = ones_char + number_string;
+        if(number == 0){
+            break;
+        }
+        number = number/10;
+    }
+    return number_string;
+}

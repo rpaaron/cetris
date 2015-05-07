@@ -8,6 +8,8 @@
 #ifndef SCOREDRAW_H
 #define	SCOREDRAW_H
 
+#include <string>
+
 class ScoreDraw {
 public:
     ScoreDraw(float l);
