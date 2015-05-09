@@ -44,9 +44,8 @@ bool SystemSDL::init() {
     SDL_WM_SetIcon(icon, NULL);
     
 
-    if( SDL_SetVideoMode( width, height, bpp, SDL_OPENGL) == NULL )
+    if( SDL_SetVideoMode( width, height, bpp, SDL_OPENGL | SDL_RESIZABLE) == NULL )
       { return false; } //Initialize OpenGL
-
 
 	glClearColor(0, 0, 0, 0);
 
@@ -131,6 +130,20 @@ void SystemSDL::eventUpdate() {
             Game->keypressed(event);
         } else if(event.type == SDL_KEYUP) {
             Game->keyrelased(event);
+        }
+
+        if(event.type == SDL_VIDEORESIZE) {
+            width = event.resize.w;
+            height = event.resize.h;
+            SDL_SetVideoMode( width, height, bpp, SDL_OPENGL | SDL_RESIZABLE );
+            glViewport(0,0,width,height);
+
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            gluPerspective(45.0, ((float)width/(float)height), 0.1, 1000.0);
+
+            glMatrixMode(GL_MODELVIEW);
+            glLoadIdentity();
         }
     }
     
