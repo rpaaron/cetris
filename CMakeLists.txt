@@ -17,8 +17,8 @@ find_package(SDL_ttf REQUIRED)
 find_package(OpenGL REQUIRED)
 
 include_directories(    ${SDL_INCLUDE_DIRS} 
-                        ${SDL_ttf_INCLUDE_DIRS} 
+                        ${SDL_TTF_INCLUDE_DIRS} 
                         ${OPENGL_INCLUDE_DIRS}
                     )
 
-target_link_libraries(Tetris3d ${SDL_LIBRARY} ${SDL_TTF_LIBRARY} ${OPENGL_LIBRARIES})
+target_link_libraries(Tetris3d ${SDL_LIBRARY} ${SDL_TTF_LIBRARIES} ${OPENGL_LIBRARIES})
