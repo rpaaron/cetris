@@ -8,6 +8,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_opengl.h>
+#include <SDL_mixer.h>
 
 #include "SystemSDL.h"
 
@@ -21,13 +22,19 @@ SystemSDL::SystemSDL(int width, int height, int bpp) {
 
 
 SystemSDL::~SystemSDL() {
+
+    Mix_Quit();
+    TTF_Quit();
+    SDL_Quit();
 }
 
 bool SystemSDL::init() {
    
       //Initialize SDL
-    if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
-      { return false; } //Create Window
+    if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
+        printf( "SDL could not initialize! SDL Error: %s\n", Mix_GetError() );
+        return false;
+    }
 
 
     //Set caption
@@ -45,7 +52,9 @@ bool SystemSDL::init() {
     
 
     if( SDL_SetVideoMode( width, height, bpp, SDL_OPENGL | SDL_RESIZABLE) == NULL )
-      { return false; } //Initialize OpenGL
+      { return false; }
+
+    //Initialize OpenGL
 
 	glClearColor(0, 0, 0, 0);
 
@@ -86,17 +95,27 @@ bool SystemSDL::init() {
     
     
     //Initialize SDL_ttf
-    if( TTF_Init() == -1 )
-        return false;    
-    
+    if( TTF_Init() == -1 ) {
+        printf( "SDL_ttf could not initialize! SDL_ttf Error: %s\n", Mix_GetError() );
+        return false;
+    }
+
+    //Initialize SDL_mixer
+    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 2, 2048 ) < 0 ) {
+        printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
+        return false;
+    }
+
     Game = new SysGame();
-    
+
+    if(!Game->load())
+        return false;
+
     return true;
 }
 
 void SystemSDL::loop() {
-    Game->load();
-    
+
     quitLoop = false;
     Uint32 timer;
     dt =0;   

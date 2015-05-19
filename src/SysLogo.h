@@ -6,6 +6,7 @@
 #define TETRIS3D_SYSLOGO_H
 
 #include <list>
+#include <SDL_mixer.h>
 #include "Primitives.h"
 #include "Cube3d.h"
 
@@ -24,6 +25,8 @@ private:
 
     float l=0.20;
     bool end=false;
+
+    Mix_Chunk *beep;
 
     static const int lmap=48;
     int map[lmap][lmap] = {

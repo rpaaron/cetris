@@ -17,9 +17,16 @@ SysGame::SysGame() {
 
 
 SysGame::~SysGame() {
+
+    delete Menu;
+    delete Logo;
 }
 
 bool SysGame::load() {
+
+    if(!loadMusic())
+        return false;
+
     Tetris = new SysTetris();
     Tetris->setL(CubeL);
     Tetris->setXYZField(0,-2,-60);
@@ -27,11 +34,15 @@ bool SysGame::load() {
     Tetris->updateLastFieldRot();
    
     BackField = new BackgroundField(10);
-    
+
     return true;
 }
 
+bool SysGame::loadMusic() {
 
+
+    return true;
+}
 
 void SysGame::update(float dt) {
     

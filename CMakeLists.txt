@@ -14,11 +14,13 @@ add_executable(Tetris3d ${SOURCE_FILES})
 
 find_package(SDL REQUIRED)
 find_package(SDL_ttf REQUIRED)
+find_package(SDL_mixer REQUIRED)
 find_package(OpenGL REQUIRED)
 
 include_directories(    ${SDL_INCLUDE_DIR} 
-                        ${SDLTTF_INCLUDE_DIR} 
+                        ${SDLTTF_INCLUDE_DIR}
+                        ${SDLMIXER_INCLUDE_DIR}
                         ${OPENGL_INCLUDE_DIRS}
                     )
 
-target_link_libraries(Tetris3d ${SDL_LIBRARY} ${SDLTTF_LIBRARY} ${OPENGL_LIBRARIES})
+target_link_libraries(Tetris3d ${SDL_LIBRARY} ${SDLTTF_LIBRARY} ${SDLMIXER_LIBRARY} ${OPENGL_LIBRARIES})

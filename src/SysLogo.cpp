@@ -17,20 +17,35 @@ SysLogo::SysLogo() {
             }
         }
     }
+
+    beep = Mix_LoadWAV("data/sound/logobeep.wav");
+    if( beep == NULL ) {
+        printf( "Failed to load logo sound! SDL_mixer Error: %s\n", Mix_GetError() );
+        exit(1);
+    }
 }
 
 SysLogo::~SysLogo() {
     for(Cube3d* elem : cubes)
         delete elem;
+
+    Mix_FreeChunk(beep);
 }
 
 void SysLogo::update(float dt) {
+    static bool beepON=false;
     static float wait=0;
     wait+=10*dt;
 
     for( std::list<Cube3d*>::iterator elem = cubes.begin() ;
          elem != cubes.end() ; elem++) {
         (*elem)->update(dt);
+
+
+        if(!beepON && wait >=10) {
+            Mix_PlayChannel(-1, beep, 0);
+            beepON=true;
+        }
 
         if(wait >=10)
             (*elem)->setMove(true);

@@ -9,6 +9,7 @@
 #ifndef GAME_H
 #define	GAME_H
 
+#include <SDL_mixer.h>
 #include "SysTetris.h"
 #include "Primitives.h"
 #include "KeyEvent.h"
@@ -23,6 +24,7 @@ public:
     virtual ~SysGame();
     
     bool load();
+    bool loadMusic();
     void update(float dt);
     void render();
     
@@ -46,6 +48,7 @@ private:
     float RotVel= 180;
 
     float quit=false;
+
 };
 
 #endif	/* GAME_H */
