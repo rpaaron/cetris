@@ -9,6 +9,7 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
 #include "SysGame.h"
+#include "utils.h"
 
 SysGame::SysGame() {
     Menu = new SysMenu(CubeL);
@@ -18,16 +19,28 @@ SysGame::SysGame() {
 
 SysGame::~SysGame() {
 
+    TTF_CloseFont(Font);
+    Font=NULL;
+
     delete Menu;
     delete Logo;
 }
 
 bool SysGame::load() {
 
+    if(Font == NULL)
+        Font = TTF_OpenFont(data("data/FreeSans.ttf").c_str(), 100);
+
+    if(Font == NULL) {
+        printf("%s\n", TTF_GetError());
+        return false;
+    }
+    Menu->setFont(Font);
+
     if(!loadMusic())
         return false;
 
-    Tetris = new SysTetris();
+    Tetris = new SysTetris(Font);
     Tetris->setL(CubeL);
     Tetris->setXYZField(0,-2,-60);
     Tetris->setXYZFieldRot(0,0,0);

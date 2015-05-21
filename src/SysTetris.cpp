@@ -12,7 +12,7 @@
 #include "SysTetris.h"
 
 
-SysTetris::SysTetris() {
+SysTetris::SysTetris(TTF_Font *Font) {
     
     //init field
     for(int i=0; i<FIELD_H; i++) {
@@ -23,7 +23,7 @@ SysTetris::SysTetris() {
     
     srand(time(0));
     
-    drawScore = new ScoreDraw(l);
+    drawScore = new ScoreDraw(Font,l);
     
     currentBrick = newBrick();
     nextBrick = newBrick();

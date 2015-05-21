@@ -11,7 +11,6 @@ using namespace std;
 
 
 int main(int argc,char *argv[]) {
- 
     SystemSDL *sys = new SystemSDL(480, 640, 32);
 
     if(!sys->init())

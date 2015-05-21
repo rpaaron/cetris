@@ -29,7 +29,7 @@ class Brick;
 
 class SysTetris : KeyEvent {
 public:
-    SysTetris();
+    SysTetris(TTF_Font *Font);
     virtual ~SysTetris();
     
     void update(float dt);

@@ -59,13 +59,13 @@ void SysMenu::draw() {
     SDL_Color Textcol = {0,255,0,0};
     
     glTranslatef(-l*2-l,0,0);
-    drawColoredCharCube(l, Cubecol, Textcol," P ");
+    drawColoredCharCube(l, Cubecol, Textcol," P ", Font);
     glTranslatef(2*l,0,0);
-    drawColoredCharCube(l, Cubecol, Textcol," l ");
+    drawColoredCharCube(l, Cubecol, Textcol," l ", Font);
     glTranslatef(2*l,0,0);
-    drawColoredCharCube(l, Cubecol, Textcol," a ");
+    drawColoredCharCube(l, Cubecol, Textcol," a ", Font);
     glTranslatef(2*l,0,0);
-    drawColoredCharCube(l, Cubecol, Textcol," y ");
+    drawColoredCharCube(l, Cubecol, Textcol," y ", Font);
 
     glPopMatrix();
     glPushMatrix();
@@ -74,13 +74,13 @@ void SysMenu::draw() {
     glRotatef(180,1,0,0);
     
     Textcol = {255,0,0,0};
-    drawCharQuad(l+0.01, Textcol, " E ");
+    drawCharQuad(l+0.01, Textcol, " E ", Font);
     glTranslatef(2*l,0,0);
-    drawCharQuad(l+0.01, Textcol, " x ");
+    drawCharQuad(l+0.01, Textcol, " x ", Font);
     glTranslatef(2*l,0,0);
-    drawCharQuad(l+0.01, Textcol, " i ");
+    drawCharQuad(l+0.01, Textcol, " i ", Font);
     glTranslatef(2*l,0,0);
-    drawCharQuad(l+0.01, Textcol, " t ");    
+    drawCharQuad(l+0.01, Textcol, " t ", Font);
     
     glPopMatrix();
 
@@ -103,16 +103,16 @@ void SysMenu::drawTitle() {
     	pos[(NTurn-1)%4] = (NTurn+3)%TitleL;
 
     char s[4] = " # ";
-    s[1] = Title[pos[0]];    drawCharQuad(2*l, Textcol, s);
+    s[1] = Title[pos[0]];    drawCharQuad(2*l, Textcol, s, Font);
     
     glRotatef(90,0,1,0);
-    s[1] = Title[pos[1]];    drawCharQuad(2*l, Textcol, s);
+    s[1] = Title[pos[1]];    drawCharQuad(2*l, Textcol, s, Font);
     
     glRotatef(90,0,1,0);
-    s[1] = Title[pos[2]];    drawCharQuad(2*l, Textcol, s);
+    s[1] = Title[pos[2]];    drawCharQuad(2*l, Textcol, s, Font);
     
     glRotatef(90,0,1,0);
-    s[1] = Title[pos[3]];    drawCharQuad(2*l, Textcol, s);
+    s[1] = Title[pos[3]];    drawCharQuad(2*l, Textcol, s, Font);
 }
 
 

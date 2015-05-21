@@ -31,8 +31,13 @@ void drawColoredCube(float l, COLOR col) {
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
-void drawCharQuad(float l, SDL_Color charcol, const char* text) {
-    
+void drawCharQuad(float l, SDL_Color charcol, const char* text, TTF_Font *font) {
+
+    if(font ==NULL) {
+        printf("Primitive draw error: font not setted\n");
+        return;
+    }
+
     glEnable(GL_TEXTURE_2D);
     
     glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE); 
@@ -42,10 +47,6 @@ void drawCharQuad(float l, SDL_Color charcol, const char* text) {
 
     
     GLuint charText;
-    TTF_Font *font = TTF_OpenFont("data/FreeSans.ttf", 100);
-    
-    if(font == NULL)
-		printf("%s\n", TTF_GetError()); 
 
     glGenTextures(1, &charText);
     glBindTexture(GL_TEXTURE_2D, charText);
@@ -57,8 +58,7 @@ void drawCharQuad(float l, SDL_Color charcol, const char* text) {
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, sFont->w, sFont->h, 0, GL_BGRA, GL_UNSIGNED_BYTE, sFont->pixels);
 
     SDL_FreeSurface(sFont);
-    TTF_CloseFont(font);
-    
+
     
     glColor3f(1.0f,1.0f,1.0f); //white
     glBegin(GL_QUADS);
@@ -74,9 +74,14 @@ void drawCharQuad(float l, SDL_Color charcol, const char* text) {
     glDisable(GL_TEXTURE_2D);
 }
 
-void drawColoredCharCube(float l, COLOR col, SDL_Color charcol, const char* text) {
+void drawColoredCharCube(float l, COLOR col, SDL_Color charcol, const char* text, TTF_Font *font) {
     drawColoredCube(l, col);
-    drawCharQuad(l, charcol, text);   
+
+    if(font ==NULL) {
+        printf("Primitive draw error: font not setted\n");
+        return;
+    }
+    drawCharQuad(l, charcol, text, font);
 }
 
 

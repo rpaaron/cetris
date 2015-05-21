@@ -3,6 +3,7 @@
 //
 
 #include "SysLogo.h"
+#include "utils.h"
 
 SysLogo::SysLogo() {
 
@@ -18,7 +19,7 @@ SysLogo::SysLogo() {
         }
     }
 
-    beep = Mix_LoadWAV("data/sound/logobeep.wav");
+    beep = Mix_LoadWAV(data("data/sound/logobeep.wav").c_str());
     if( beep == NULL ) {
         printf( "Failed to load logo sound! SDL_mixer Error: %s\n", Mix_GetError() );
         exit(1);

@@ -17,6 +17,8 @@ public:
     virtual ~SystemSDL();
     
     bool init();
+    void checkPath();
+    const char* toPath(const char*);
     
     void loop();
        
@@ -33,6 +35,8 @@ private:
     float dt;
     
     SysGame *Game;
+
+    std::string *path;
 
 };
 

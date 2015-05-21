@@ -9,7 +9,7 @@
 #ifndef GAME_H
 #define	GAME_H
 
-#include <SDL_mixer.h>
+#include <SDL/SDL_mixer.h>
 #include "SysTetris.h"
 #include "Primitives.h"
 #include "KeyEvent.h"
@@ -39,6 +39,8 @@ private:
     SysMenu *Menu;
     SysTetris *Tetris;
     BackgroundField *BackField;
+
+    TTF_Font *Font;
 
     float CubeL = 1;
 

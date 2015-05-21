@@ -7,6 +7,7 @@
 #include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_opengl.h>
+#include <SDL/SDL_ttf.h>
 
 #ifndef PRIMITIVES_H
 #define	PRIMITIVES_H
@@ -17,8 +18,8 @@ struct COLOR {
     
 void drawCube(float l);
 void drawColoredCube(float l, COLOR col);
-void drawColoredCharCube(float l, COLOR col, SDL_Color charcol, const char* text);
-void drawCharQuad(float l, SDL_Color charcol, const char* text);
+void drawColoredCharCube(float l, COLOR col, SDL_Color charcol, const char* text, TTF_Font *font);
+void drawCharQuad(float l, SDL_Color charcol, const char* text, TTF_Font *font);
 
 #endif	/* PRIMITIVES_H */
 

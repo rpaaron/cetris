@@ -4,13 +4,17 @@
  * 
  * Created on 23 marzo 2015, 22.14
  */
+
+
 #include <stdio.h>
+#include <string>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_opengl.h>
-#include <SDL_mixer.h>
+#include <SDL/SDL_mixer.h>
 
 #include "SystemSDL.h"
+#include "utils.h"
 
 
 SystemSDL::SystemSDL(int width, int height, int bpp) {
@@ -29,18 +33,16 @@ SystemSDL::~SystemSDL() {
 }
 
 bool SystemSDL::init() {
-   
+
       //Initialize SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
         printf( "SDL could not initialize! SDL Error: %s\n", Mix_GetError() );
         return false;
     }
 
-
     //Set caption
     SDL_WM_SetCaption( "Tetris3d", NULL );
-    
-    SDL_Surface *icon = SDL_LoadBMP("data/icon.bmp");
+    SDL_Surface *icon = SDL_LoadBMP(data("data/icon.bmp").c_str());
     if(icon == NULL) {
          printf("Icon load error: %s\n", SDL_GetError());
     } else {
@@ -113,6 +115,7 @@ bool SystemSDL::init() {
 
     return true;
 }
+
 
 void SystemSDL::loop() {
 

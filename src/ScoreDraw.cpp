@@ -15,7 +15,9 @@
 
 inline std::string to_string(int number);
 
-ScoreDraw::ScoreDraw(float l) {
+ScoreDraw::ScoreDraw(TTF_Font *Font, float l) {
+    this->Font = Font;
+
     this->l = l;
     //position relative to the center of field
     
@@ -90,15 +92,15 @@ void ScoreDraw::draw() {
     glTranslatef(Xreal, Yreal, Zreal);
     glRotatef(XrealRot,1,0,0);
     
-    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "S");
+    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "S", Font);
     glTranslatef(2*scorel, 0, 0);
-    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "c");
+    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "c", Font);
     glTranslatef(2*scorel, 0, 0);
-    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "o");
+    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "o", Font);
     glTranslatef(2*scorel, 0, 0);
-    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "r");
+    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "r", Font);
     glTranslatef(2*scorel, 0, 0);
-    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "e");
+    drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, "e", Font);
     glTranslatef(2*scorel, 0, 0);
     drawColoredCube(scorel, {0,0,1.0,0.2});
 
@@ -121,12 +123,12 @@ void ScoreDraw::draw() {
         glPushMatrix();
         if(toRotate[i])
             glRotatef(RotateAngle, 1,0,0);
-        drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, Sc);
+        drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, Sc, Font);
         
         
         if(realSc[0] != Sc[0]) {
             glRotatef(-90, 1,0,0);
-            drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, realSc);
+            drawColoredCharCube(scorel, {0,0,1.0,0.2}, {0,255,255,0}, realSc, Font);
             glRotatef(90, 1,0,0);
             toRotate[i] = true;
         }

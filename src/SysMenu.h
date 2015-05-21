@@ -32,8 +32,12 @@ public:
     void setStat(stat s) { Stat=s; };
     
     void switchEntry();
+
+    void setFont(TTF_Font *Font) { this->Font =Font;}
     
 private:
+    TTF_Font *Font=NULL;
+
     stat Stat= LOGO;
     
     entry currentEntry = PLAY_e;

@@ -9,10 +9,11 @@
 #define	SCOREDRAW_H
 
 #include <string>
+#include <SDL/SDL_ttf.h>
 
 class ScoreDraw {
 public:
-    ScoreDraw(float l);
+    ScoreDraw(TTF_Font *Font, float l);
     virtual ~ScoreDraw();
     
     void update(int score, float dt);
@@ -21,7 +22,12 @@ public:
     void moveToPos(float dt);
     void setPausePosition();
     void setPlayPosition();
+
+    void setFont(TTF_Font *Font) { this->Font =Font;}
+
 private:
+    TTF_Font *Font=NULL;
+
     int displayScore=0;
     int realScore=0;
     

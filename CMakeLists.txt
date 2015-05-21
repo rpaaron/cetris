@@ -2,13 +2,14 @@ cmake_minimum_required(VERSION 2.4)
 
 project(Tetris3d)
 
-file(COPY data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data/)
+file(COPY data/ DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/data)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 file(GLOB_RECURSE SOURCE_FILES
 	src/*.cpp src/*.h
 )
+
 
 add_executable(Tetris3d ${SOURCE_FILES})
 
@@ -24,3 +25,8 @@ include_directories(    ${SDL_INCLUDE_DIR}
                     )
 
 target_link_libraries(Tetris3d ${SDL_LIBRARY} ${SDLTTF_LIBRARY} ${SDLMIXER_LIBRARY} ${OPENGL_LIBRARIES})
+target_compile_definitions(Tetris3d PUBLIC D_PATH="${CMAKE_INSTALL_PREFIX}/share/Tetris3d/")
+
+
+install(TARGETS Tetris3d RUNTIME DESTINATION bin)
+install(DIRECTORY data DESTINATION share/Tetris3d)
