@@ -12,6 +12,7 @@
 #include "utils.h"
 
 SysGame::SysGame() {
+    Music = new SysMusic();
     Menu = new SysMenu(CubeL);
     Logo = new SysLogo();
 }
@@ -37,9 +38,6 @@ bool SysGame::load() {
     }
     Menu->setFont(Font);
 
-    if(!loadMusic())
-        return false;
-
     Tetris = new SysTetris(Font);
     Tetris->setL(CubeL);
     Tetris->setXYZField(0,-2,-60);
@@ -51,13 +49,10 @@ bool SysGame::load() {
     return true;
 }
 
-bool SysGame::loadMusic() {
-
-
-    return true;
-}
 
 void SysGame::update(float dt) {
+
+    Music->update(Tetris->getScore());
     
     float delta = abs(RotMenuPlayAnim - RotMenuPlay);
     if (delta >2*dt*RotVel) {
@@ -80,9 +75,11 @@ void SysGame::update(float dt) {
     BackField->update(dt);
     
     if(Menu->getStat() == Menu->PLAY) {
+        Music->setRoutine(Music->PLAY);
         RotMenuPlay = 90;
         Tetris->update(dt);
     } else if(Menu->getStat() == Menu->MENU) {
+        Music->setRoutine(Music->MENU);
         RotMenuPlay = 0;
         Menu->update(dt);
     } else if(Menu->getStat() == Menu->EXIT) {
@@ -129,6 +126,9 @@ void SysGame::render() {
         Logo->draw();
     glPopMatrix();
 }
+
+
+
 
 void SysGame::keypressed(SDL_Event& ev) {
     if(Menu->getStat() == Menu->PLAY) {

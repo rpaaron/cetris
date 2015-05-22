@@ -16,7 +16,7 @@
 #include "BackgroundField.h"
 #include "SysMenu.h"
 #include "SysLogo.h"
-
+#include "SysMusic.h"
 
 class SysGame : KeyEvent {
 public:
@@ -24,7 +24,6 @@ public:
     virtual ~SysGame();
     
     bool load();
-    bool loadMusic();
     void update(float dt);
     void render();
     
@@ -39,6 +38,8 @@ private:
     SysMenu *Menu;
     SysTetris *Tetris;
     BackgroundField *BackField;
+
+    SysMusic *Music;
 
     TTF_Font *Font;
 

@@ -56,6 +56,7 @@ private:
     int NTurn=0;
 
 
+
 };
 
 #endif	/* SYSMENU_H */

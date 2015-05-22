@@ -78,7 +78,8 @@ public:
     virtual void keyrelased(SDL_Event& ev);
 
 
-   
+    int getScore() const { return score;}
+
 private:
     void checkFullLines();
     void removeLine(int n);

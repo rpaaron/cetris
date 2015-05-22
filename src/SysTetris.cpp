@@ -13,7 +13,7 @@
 
 
 SysTetris::SysTetris(TTF_Font *Font) {
-    
+
     //init field
     for(int i=0; i<FIELD_H; i++) {
         toRemove[i] = false;
