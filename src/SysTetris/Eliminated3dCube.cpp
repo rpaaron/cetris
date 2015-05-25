@@ -31,7 +31,7 @@ bool Eliminated3dCube::updatePosition(float dt) {
         rotation += 90*speed*dt;
     }
     
-    if(abs(Xreal) >1000 || abs(Yreal) >1000 || abs(Zreal) >1000)
+    if(abs(Xreal) >50 || abs(Yreal) >50 || abs(Zreal) >50)
         return false;
     
     return true;

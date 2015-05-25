@@ -6,6 +6,7 @@
 #define TETRIS3D_SYSMUSIC_H
 
 #include <SDL/SDL_mixer.h>
+#include "SysTetris.h"
 
 class SysMusic {
 
@@ -26,13 +27,13 @@ public:
 
     void setRoutine(ROUTINE r) { RoutineToSet=r; }
     int getRoutine() { return RoutineToSet; }
-    void update(int score);
+    void update(SysTetris *Tetris);
 
 
 
 private:
     void menuRoutine();
-    void playRoutine(int score);
+    void playRoutine(SysTetris *Tetris);
     void pauseRoutine();
     void endRoutine();
 

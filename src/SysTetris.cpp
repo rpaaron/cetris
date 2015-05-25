@@ -136,7 +136,6 @@ void SysTetris::update(float dt) {
             if(field[i][j] != NULL) {
                 field[i][j]->setXY(j,i);
                 field[i][j]->updatePosition(dt);
- 
             }
         }
     }
@@ -567,4 +566,16 @@ void SysTetris::keyrelased(SDL_Event& ev) {
         Right =false;
     if(ev.key.keysym.sym == SDLK_DOWN)
         addFallSpeed(false);
+}
+
+int SysTetris::getFieldCount() {
+    int count=0;
+    for(int i=0 ; i<FIELD_H ; i++) {
+        for(int j=0; j<FIELD_W; j++) {
+            if(field[i][j] != NULL) {
+                count++;
+            }
+        }
+    }
+    return count;
 }

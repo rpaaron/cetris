@@ -23,6 +23,7 @@ SysGame::~SysGame() {
     TTF_CloseFont(Font);
     Font=NULL;
 
+    delete Music;
     delete Menu;
     delete Logo;
 }
@@ -52,7 +53,7 @@ bool SysGame::load() {
 
 void SysGame::update(float dt) {
 
-    Music->update(Tetris->getScore());
+    Music->update(Tetris);
     
     float delta = abs(RotMenuPlayAnim - RotMenuPlay);
     if (delta >2*dt*RotVel) {
@@ -64,6 +65,7 @@ void SysGame::update(float dt) {
     
     if(Tetris->isGameOver() && !Tetris->isPaused()) {
         Menu->setStat(Menu->MENU);
+        Music->setRoutine(Music->MENU);
         
         if(RotMenuPlayAnim == 0) {
             Tetris->switchPause();
@@ -75,7 +77,12 @@ void SysGame::update(float dt) {
     BackField->update(dt);
     
     if(Menu->getStat() == Menu->PLAY) {
-        Music->setRoutine(Music->PLAY);
+        if(Tetris->isPaused() && Tetris->isGameOver())
+            Music->setRoutine(Music->END);
+        else if (Tetris->isPaused())
+            Music->setRoutine(Music->PAUSE);
+        else
+            Music->setRoutine(Music->PLAY);
         RotMenuPlay = 90;
         Tetris->update(dt);
     } else if(Menu->getStat() == Menu->MENU) {
@@ -134,6 +141,8 @@ void SysGame::keypressed(SDL_Event& ev) {
     if(Menu->getStat() == Menu->PLAY) {
         if(ev.key.keysym.sym == SDLK_ESCAPE) {
             Menu->setStat(Menu->MENU);
+            if(Tetris->isGameOver())
+                Tetris->switchPause();
         }
         
         Tetris->keypressed(ev);

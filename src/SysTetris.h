@@ -79,6 +79,7 @@ public:
 
 
     int getScore() const { return score;}
+    int getFieldCount();
 
 private:
     void checkFullLines();
@@ -92,7 +93,7 @@ private:
     bool Left=false, Right=false;
     bool pause=false;
     bool gameOver=false;
-    
+
     int score=0;
     ScoreDraw *drawScore;
     
