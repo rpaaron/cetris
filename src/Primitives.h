@@ -13,13 +13,14 @@
 #define	PRIMITIVES_H
 
 struct COLOR {
-  GLfloat r,g,b,a;
+    GLfloat r,g,b,a;
 };
     
 void drawCube(float l);
 void drawColoredCube(float l, COLOR col);
 void drawColoredCharCube(float l, COLOR col, SDL_Color charcol, const char* text, TTF_Font *font);
 void drawCharQuad(float l, SDL_Color charcol, const char* text, TTF_Font *font);
+void drawText(float h, float w, SDL_Color charcol, const char* text, TTF_Font *font, float alpha);
 
 #endif	/* PRIMITIVES_H */
 

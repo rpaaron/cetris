@@ -14,7 +14,9 @@
 
 SysMenu::SysMenu(float l) {
     this->l = l;
-    
+    MarginCredits = 10*l;
+    Xcredits = -MarginCredits;
+
     Title = new char [100];
     strcpy(Title, "Tetris3d by Cecco4 ");
     TitleL = strlen(Title);
@@ -42,22 +44,33 @@ void SysMenu::update(float dt) {
         NTurn++;
         tmp=tmp-90;
     }
+
+    Xcredits -= 2*dt;
+    if(Xcredits <= -MarginCredits)
+        Xcredits = MarginCredits;
+
+    alphaC = 1 - fabs(Xcredits)/ MarginCredits;
 }
 
 
 void SysMenu::draw() {
-    
+
+
     glPushMatrix();
     drawTitle();
     glPopMatrix();
 
-    glTranslatef(0,-4*l,-20);
+
+    glTranslatef(0,-4*l,-20);  //allontana
+    glPushMatrix();             //push per il messaggio
+
     glRotatef(MenuRotAnim, 1,0,0);
+
     glPushMatrix();
-    
     COLOR Cubecol = {0,0,1.0,0.2};
     SDL_Color Textcol = {0,255,0,0};
-    
+
+
     glTranslatef(-l*2-l,0,0);
     drawColoredCharCube(l, Cubecol, Textcol," P ", Font);
     glTranslatef(2*l,0,0);
@@ -81,9 +94,22 @@ void SysMenu::draw() {
     drawCharQuad(l+0.01, Textcol, " i ", Font);
     glTranslatef(2*l,0,0);
     drawCharQuad(l+0.01, Textcol, " t ", Font);
-    
     glPopMatrix();
 
+    //messaggio
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(Xcredits - LCredits/2,-4*l,0);
+    drawText(0.5,0.5, {0,0,255,0}, "Programming:", Font, alphaC);
+    glTranslatef(4.15/2,0,0);
+    drawText(0.5,0.5, {200,0,100,0}, "Francesco Gatti", Font, alphaC);
+    glTranslatef(4.6/2,0,0);
+    drawText(0.5,0.5, {0,0,255,0}, "- Music:", Font, alphaC);
+    glTranslatef(2.5/2,0,0);
+    drawText(0.5,0.5, {200,0,100,0}, "Bruno Ghion", Font, alphaC);
+
+
+    glPopMatrix();
 }
 
 void SysMenu::drawTitle() {

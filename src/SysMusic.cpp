@@ -6,19 +6,8 @@
 #include "SysMusic.h"
 #include "SysTetris.h"
 
+void musicEffect(int chan, void *stream, int len, void *udata);
 
-void readSound(int chan, void *stream, int len, void *udata) {
-    BackgroundField *B = (BackgroundField*) udata;
-    short* p = (short*) stream;
-
-    static int i=0;
-    i = (i++)%(len/2);
-
-    float alpha = 0.2+float(abs(p[i]))/1000/2;
-    if(alpha >1)
-        alpha=1;
-    B->setAlpha(alpha);
-}
 
 SysMusic::SysMusic(BackgroundField *BField) {
     this->BField = BField;
@@ -55,7 +44,7 @@ void SysMusic::update(SysTetris *Tetris) {
 
     //Leggo dati audio
     void* arg = BField;
-    Mix_RegisterEffect(1, readSound, NULL, arg);
+    Mix_RegisterEffect(1, musicEffect, NULL, arg);
 
     switch (RoutineToSet) {
         case MENU:
@@ -209,3 +198,15 @@ void SysMusic::endRoutine() {
 }
 
 
+void musicEffect(int chan, void *stream, int len, void *udata) {
+    BackgroundField *B = (BackgroundField*) udata;
+    short* p = (short*) stream;
+
+    static int i=0;
+    i = (i++)%(len/2);
+
+    float alpha = 0.2+float(abs(p[i]))/1000/2;
+    if(alpha >1)
+        alpha=1;
+    B->setAlpha(alpha);
+}

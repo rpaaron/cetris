@@ -55,6 +55,10 @@ private:
     int TitleL;
     int NTurn=0;
 
+    float Xcredits = 0;
+    float MarginCredits;
+    float LCredits =(4.15+4.6+2.5)/2;
+    float alphaC=0;
 
 
 };
