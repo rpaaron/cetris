@@ -18,7 +18,7 @@ SysMenu::SysMenu(float l) {
     Xcredits = -MarginCredits;
 
     Title = new char [100];
-    strcpy(Title, "Tetris3d by Cecco4 ");
+    strcpy(Title, "  Tetris3d!!!  ");
     TitleL = strlen(Title);
 }
 

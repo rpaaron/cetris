@@ -118,7 +118,7 @@ void SysMusic::playRoutine(SysTetris *Tetris) {
         }
 
         //Muro alto o ogni 2000 musica calzante
-        if( ( Tetris->getScore()>1000 && Tetris->getFieldCount()>FIELD_W*(FIELD_H/2) ) || j>count2) {
+        if( ( Tetris->getFieldCount()>FIELD_W*(FIELD_H/2) ) || j>count2) {
             if(PlayStatus==0 || PlayStatus ==4)
                 PlayStatus=5;
             else
