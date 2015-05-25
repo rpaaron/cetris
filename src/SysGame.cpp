@@ -12,7 +12,8 @@
 #include "utils.h"
 
 SysGame::SysGame() {
-    Music = new SysMusic();
+    BackField = new BackgroundField(10);
+    Music = new SysMusic(BackField);
     Menu = new SysMenu(CubeL);
     Logo = new SysLogo();
 }
@@ -23,6 +24,7 @@ SysGame::~SysGame() {
     TTF_CloseFont(Font);
     Font=NULL;
 
+    delete BackField;
     delete Music;
     delete Menu;
     delete Logo;
@@ -44,8 +46,6 @@ bool SysGame::load() {
     Tetris->setXYZField(0,-2,-60);
     Tetris->setXYZFieldRot(0,0,0);
     Tetris->updateLastFieldRot();
-   
-    BackField = new BackgroundField(10);
 
     return true;
 }

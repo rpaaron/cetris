@@ -17,11 +17,14 @@ public:
 
     void update(float dt);
     void draw();
+    
+    void setAlpha(float a) { alpha=a;}
 private:
     Brick **Cubelist;
     int nCubes;
     float vel = 10;
     float l = 10;
+    float alpha=0.2;
 };
 
 #endif	/* BACKGROUNDFIELD_H */

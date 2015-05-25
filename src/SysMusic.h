@@ -7,12 +7,13 @@
 
 #include <SDL/SDL_mixer.h>
 #include "SysTetris.h"
+#include "BackgroundField.h"
 
 class SysMusic {
 
 
 public:
-    SysMusic();
+    SysMusic(BackgroundField *BField);
     virtual ~SysMusic();
 
     enum TYPE { BASS_INTRO, BATT_INTRO1, BATT_INTRO2,
@@ -32,6 +33,9 @@ public:
 
 
 private:
+    BackgroundField *BField;
+
+
     void menuRoutine();
     void playRoutine(SysTetris *Tetris);
     void pauseRoutine();
@@ -61,6 +65,7 @@ private:
             "data/sound/lead3.wav",
             "data/sound/lead4.wav",
     };
+
 };
 
 

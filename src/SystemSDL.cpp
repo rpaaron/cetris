@@ -17,6 +17,7 @@
 #include "utils.h"
 
 
+
 SystemSDL::SystemSDL(int width, int height, int bpp) {
 
     this->height = height;
@@ -103,7 +104,7 @@ bool SystemSDL::init() {
     }
 
     //Initialize SDL_mixer
-    if( Mix_OpenAudio( 44100, MIX_DEFAULT_FORMAT, 6, 2048 ) < 0 ) {
+    if( Mix_OpenAudio( 44100, AUDIO_S16SYS, 6, 2048 ) < 0 ) {
         printf( "SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError() );
         return false;
     }

@@ -63,7 +63,7 @@ void BackgroundField::draw() {
                 for(int j=0; j<4; j++) {
                     if(Cubelist[i]->getBodyValue(k,j) != 0) {
                         //glDisable(GL_BLEND);
-                        drawColoredCube(l, {0,0,0.1, 0.2});
+                        drawColoredCube(l, {0,0,0.1, alpha});
                         //glEnable(GL_BLEND);
                         //drawColoredCube(l, {0,0,0.1, 0.2});
                     }

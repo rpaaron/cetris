@@ -41,7 +41,7 @@ private:
 
     SysMusic *Music;
 
-    TTF_Font *Font;
+    TTF_Font *Font = NULL;
 
     float CubeL = 1;
 
