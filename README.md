@@ -1,2 +1,2 @@
-# Tetris3d
+# Cetris
 3d Tetris game with SDL and OpenGL

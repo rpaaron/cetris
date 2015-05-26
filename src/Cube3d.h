@@ -2,8 +2,8 @@
 // Created by cecco on 05/05/15.
 //
 
-#ifndef TETRIS3D_CUBE3D_H
-#define TETRIS3D_CUBE3D_H
+#ifndef CUBE3D_H
+#define CUBE3D_H
 
 
 #include "Primitives.h"
@@ -49,4 +49,4 @@ private:
     COLOR col = { 1, 1, 1, 0.2};
 
 };
-#endif //TETRIS3D_CUBE3D_H
+#endif //CUBE3D_H

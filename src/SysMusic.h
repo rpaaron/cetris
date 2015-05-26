@@ -2,8 +2,8 @@
 // Created by cecco on 22/05/15.
 //
 
-#ifndef TETRIS3D_SYSMUSIC_H
-#define TETRIS3D_SYSMUSIC_H
+#ifndef SYSMUSIC_H
+#define SYSMUSIC_H
 
 #include <SDL/SDL_mixer.h>
 #include "SysTetris.h"
@@ -69,4 +69,4 @@ private:
 };
 
 
-#endif //TETRIS3D_SYSMUSIC_H
+#endif //SYSMUSIC_H

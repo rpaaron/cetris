@@ -2,8 +2,8 @@
 // Created by cecco on 05/05/15.
 //
 
-#ifndef TETRIS3D_SYSLOGO_H
-#define TETRIS3D_SYSLOGO_H
+#ifndef SYSLOGO_H
+#define SYSLOGO_H
 
 #include <list>
 #include <SDL/SDL_mixer.h>
@@ -82,5 +82,5 @@ private:
 };
 
 
-#endif //TETRIS3D_SYSLOGO_H
+#endif //SYSLOGO_H
 

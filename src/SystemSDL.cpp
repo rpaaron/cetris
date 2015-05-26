@@ -42,7 +42,7 @@ bool SystemSDL::init() {
     }
 
     //Set caption
-    SDL_WM_SetCaption( "Tetris3d", NULL );
+    SDL_WM_SetCaption( "Cetris", NULL );
     SDL_Surface *icon = SDL_LoadBMP(data("data/icon.bmp").c_str());
     if(icon == NULL) {
          printf("Icon load error: %s\n", SDL_GetError());
