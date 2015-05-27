@@ -1,6 +1,9 @@
 # Cetris
 A cool looking Tetris game.
-Made with SDL and OpenGL
+Made with SDL and OpenGL.
+
+![cetris-screen](https://cloud.githubusercontent.com/assets/11562617/7838328/90a18a94-048c-11e5-83d8-16f8ee7af7e9.png)
+
 #### Depends: 
     g++
     cmake
