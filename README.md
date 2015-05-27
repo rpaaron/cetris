@@ -13,8 +13,6 @@ Made with SDL and OpenGL
 Install the required dependencies; On Debian: <br>
 ```bash
 sudo apt-get install g++ git cmake 
-``` 
-```bash
 sudo apt-get install libsdl1.2-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev 
 ```
 Get the sources:<br>
