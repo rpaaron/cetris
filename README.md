@@ -8,43 +8,43 @@ Made with SDL and OpenGL
     SDL_ttf     (1.2)
     SDL_Mixer   (1.2)
     OpenGL
-    GLU
-
 
 ## Compiling on Linux
 Install the required dependencies; On Debian: <br>
 ```bash
-sudo apt-get install g++ git cmake ``` <br>
+sudo apt-get install g++ git cmake 
+``` 
 ```bash
-sudo apt-get install libsdl1.2-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev ```<br>
+sudo apt-get install libsdl1.2-dev libsdl-ttf2.0-dev libsdl-mixer1.2-dev 
+```
 Get the sources:<br>
 ```bash
 git clone https://github.com/cecco4/cetris.git
-```<br>
+```
 Make a build directory<br>
 ```bash
 cd cetris
 mkdir build
 cd build
-```<br>
+```
 Configure<br>
 ```bash
 cmake -DCMAKE_INSTALL_PREFIX=/usr .. 
-```<br>
+```
 Compile ("-j" option is available") <br>
 ```bash
 make
-```<br>
+```
 Install (eventually)<br>
 ```bash
 sudo make install
-```<br>
+```
 Play (if installed)<br>
 ```bash
 cetris
-```<br>
+```
 from any directory or serch in your games menu.<br>
 Play (if not installed)<br>
 ```bash
 ./cetris
-```<br>
+```
