@@ -44,7 +44,8 @@ Play (if installed)<br>
 ```bash
 cetris
 ```
-from any directory or serch in your games menu.<br>
+from any directory.<br>
+
 Play (if not installed)<br>
 ```bash
 ./cetris
