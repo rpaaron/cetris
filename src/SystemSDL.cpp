@@ -17,6 +17,13 @@
 #include "utils.h"
 
 
+void cetPerspective(GLdouble fovy, GLdouble aspect, GLdouble zNear, GLdouble zFar) {
+    static const GLdouble pi = 3.1415926535897932384626433832795;
+    auto fH = tan( (fovy / 2) / 180 * pi ) * zNear;
+    auto fW = fH * aspect;
+    glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+}
+
 
 SystemSDL::SystemSDL(int width, int height, int bpp) {
 
@@ -69,16 +76,7 @@ bool SystemSDL::init() {
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//gluPerspective(45.0, ((float)width/(float)height), 0.1, 1000.0); // FIXME
-	auto fovY = 45.0;
-	auto zNear = 0.1;
-	auto aspect = ((float)width/(float)height);
-	auto zFar = 1000.0;
-
-	const GLdouble pi = 3.1415926535897932384626433832795;
-	auto fH = tan( (fovY / 2) / 180 * pi ) * zNear;
-	auto fW = fH * aspect;
-	glFrustum(-fW, fW, -fH, fH, zNear, zFar);
+	cetPerspective(45.0, ((float)width/(float)height), 0.1, 1000.0);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -163,6 +161,9 @@ void SystemSDL::loop() {
 void SystemSDL::eventUpdate() {
     //While there are events to handle
     while( SDL_PollEvent( &event ) ) {
+
+        //std::cout << "Event type " << (uint32_t) event.type << "\n";
+        //std::cout << "Event window " << (uint32_t) event.window.event << "\n";
         if( event.type == SDL_QUIT ) {
             quitLoop = true;
         } else if( event.type == SDL_KEYDOWN ) {
@@ -171,7 +172,7 @@ void SystemSDL::eventUpdate() {
             Game->keyrelased(event);
         }
 
-        if(event.type == SDL_WINDOWEVENT_RESIZED) {
+        if(event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_RESIZED) {
             std::cout << "Get resize\n";
             width = event.window.data1;
             height = event.window.data2;
@@ -180,7 +181,7 @@ void SystemSDL::eventUpdate() {
 
             glMatrixMode(GL_PROJECTION);
             glLoadIdentity();
-            //gluPerspective(45.0, ((float)width/(float)height), 0.1, 1000.0); // FIXME
+            cetPerspective(45.0, ((float)width/(float)height), 0.1, 1000.0);
 
             glMatrixMode(GL_MODELVIEW);
             glLoadIdentity();
