@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.4)
+cmake_minimum_required(VERSION 3.6)
 
 project(cetris)
 
@@ -14,19 +14,19 @@ file(GLOB_RECURSE SOURCE_FILES
 add_executable(cetris ${SOURCE_FILES})
 
 find_package(SDL2 REQUIRED)
-INCLUDE(FindPkgConfig)
-PKG_SEARCH_MODULE(SDL2TTF   REQUIRED SDL2_ttf>=2.0.0)
-PKG_SEARCH_MODULE(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
 find_package(OpenGL REQUIRED)
 
-include_directories(    ${SDL2_INCLUDE_DIR} 
-                        ${SDL2TTF_INCLUDE_DIR}
-                        ${SDL2MIXER_INCLUDE_DIR}
-                        ${OPENGL_INCLUDE_DIRS}
-                    )
+INCLUDE(FindPkgConfig)
+PKG_SEARCH_MODULE(SDL2TTF   REQUIRED IMPORTED_TARGET SDL2_ttf>=2.0.0)
+PKG_SEARCH_MODULE(SDL2MIXER REQUIRED IMPORTED_TARGET SDL2_mixer>=2.0.0)
 
-                target_link_libraries(cetris ${SDL2_LIBRARY} ${SDL2TTF_LIBRARY} ${SDL2MIXER_LIBRARY} ${OPENGL_LIBRARIES}  SDL2 SDL2_ttf SDL2_mixer)
-                #SDL2main
+target_link_libraries(cetris
+    OpenGL::GL
+    SDL2::SDL2
+    PkgConfig::SDL2TTF
+    PkgConfig::SDL2MIXER
+)
+
 target_compile_definitions(cetris PUBLIC D_PATH="${CMAKE_INSTALL_PREFIX}/share/cetris/")
 
 
