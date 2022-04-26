@@ -13,6 +13,7 @@
 #include <SDL2/SDL_opengl.h>
 #include <SDL2/SDL_mixer.h>
 
+#include <GLFW/glfw3.h>
 #include "SystemSDL.h"
 #include "utils.h"
 
@@ -42,11 +43,19 @@ SystemSDL::~SystemSDL() {
 
 bool SystemSDL::init() {
 
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    GLFWwindow* xxx = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
       //Initialize SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 ) {
         printf( "SDL could not initialize! SDL Error: %s\n", Mix_GetError() );
         return false;
     }
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); //SDL_GL_CONTEXT_PROFILE_CORE);
+	SDL_GL_SetAttribute (SDL_GL_CONTEXT_MAJOR_VERSION, 3); //OpenGL 3+
+    SDL_GL_SetAttribute (SDL_GL_CONTEXT_MINOR_VERSION, 2); //OpenGL 3.3
 
     //Set caption
     //SDL_WM_SetCaption( "Cetris", NULL );
@@ -71,7 +80,20 @@ bool SystemSDL::init() {
 
     //Initialize OpenGL
     SDL_GLContext glcontext = SDL_GL_CreateContext(screen);
+	printf("OpenGL version supported by this platform (%s): \n", glGetString(GL_VERSION));
+	printf("OpenGL version supported by this platform (%s): \n", glGetString(GL_VENDOR));
+	printf("OpenGL version supported by this platform (%s): \n", glGetString(GL_RENDERER));
+	printf("OpenGL version supported by this platform (%s): \n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+	printf("OpenGL version supported by this platform (%s): \n", glGetString(GL_EXTENSIONS));
+	GLint maj, min;
+	glGetIntegerv(GL_MAJOR_VERSION, &maj);
+	glGetIntegerv(GL_MINOR_VERSION, &min);
+	std::cout << "Versin " << maj << " " << min << "\n";
 
+	int maj2, min2;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &maj2);
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &min2);
+	std::cout << "Versin " << maj2 << " " << min2 << "\n";
 	glClearColor(0, 0, 0, 0);
 
 	glMatrixMode(GL_PROJECTION);
